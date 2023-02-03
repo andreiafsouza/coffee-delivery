@@ -7,45 +7,137 @@ export const HomeContainer = styled.main`
 `;
 
 export const IntroContainer = styled.div`
-  width: 100%;
   min-height: 34rem;
   background: url(${background}) center center no-repeat;
   background-size: 100% 100%;
+
+  display: flex;
+  align-items: center;
 `;
 
 export const IntroContent = styled.div`
   max-width: 74rem;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1rem;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 55em) {
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2rem;
+  }
 `;
 
-export const IntroLeftContent = styled.div``;
+export const IntroLeftContent = styled.div`
+  padding-bottom: 4rem;
+
+  @media (min-width: 55em) {
+    padding-bottom: 6.75rem;
+  }
+`;
 
 export const IntroTextContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 1rem;
 `;
 
-export const IntroTitle = styled.div`
+export const IntroTitle = styled.h1`
   font-family: ${(props) => props.theme.font.display};
   color: ${(props) => props.theme.base.title};
   font-size: ${(props) => props.theme.fontSize[48]};
   font-weight: 800;
   line-height: 130%;
+  letter-spacing: -0.005em;
 `;
 
-export const IntroSubtitle = styled.div`
+export const IntroSubtitle = styled.p`
   font-size: ${(props) => props.theme.fontSize[20]};
   color: ${(props) => props.theme.base.subtitle};
   line-height: 130%;
+
+  padding-bottom: 4.125rem;
 `;
 
-export const IntroItemContainer = styled.div``;
+export const IntroItemContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
 
-export const IntroItem = styled.div``;
+  @media (min-width: 55em) {
+    justify-content: space-between;
+  }
+`;
+
+export const IntroItemContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+`;
+
+export const IntroItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  white-space: nowrap;
+`;
+
+export const IntroItemIcon = styled.div`
+  background: ${({ color }) => (color ? color : "#fff")};
+  min-width: 2rem;
+  min-height: 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1000px;
+`;
 
 export const IntroRightContent = styled.div`
   display: flex;
+  justify-content: center;
+
+  @media (min-width: 55em) {
+    justify-content: flex-end;
+
+    img {
+      max-width: 29.75rem;
+      max-height: 22.5rem;
+    }
+  }
+`;
+
+export const CoffeeListContainer = styled.div`
+  max-width: 74rem;
+  margin-inline: auto;
+  margin-bottom: 9.8125rem;
+`;
+
+export const CoffeeList = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem 2rem;
+
+  @media (min-width: 55em) and (max-width: 75em) {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.25rem 2rem;
+  }
+
+  @media (min-width: 75em) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1.25rem 2rem;
+  }
+`;
+
+export const CoffeeListTitle = styled.h2`
+  font-family: ${(props) => props.theme.font.display};
+  color: ${(props) => props.theme.base.subtitle};
+  font-size: ${(props) => props.theme.fontSize[32]};
+  font-weight: 800;
+  line-height: 130%;
+  margin-top: 2rem;
+  margin-bottom: 2.125rem;
+
+  align-self: flex-start;
 `;

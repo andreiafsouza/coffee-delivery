@@ -1,6 +1,13 @@
 import styled from "styled-components";
 
-export const HeaderContainer = styled.header`
+export const Container = styled.header`
+  position: sticky;
+  top: 0;
+  background: ${(props) => props.theme.base.background};
+  z-index: 1000;
+`;
+
+export const HeaderContainer = styled.div`
   max-width: 74rem;
   margin: 0 auto;
   padding: 2rem;

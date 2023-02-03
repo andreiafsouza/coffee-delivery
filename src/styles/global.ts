@@ -17,4 +17,11 @@ export const GlobalStyle = createGlobalStyle`
     font-size: ${(props) => props.theme.fontSize[16]};
     line-height: 130%;
   }
+
+  img,
+picture,
+svg {
+  max-width: 100%;
+  display: block;
+}
 `;
