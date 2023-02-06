@@ -9,6 +9,8 @@ export const SelectContainer = styled.div`
 
   padding: 0.53125rem 0.5rem;
   gap: 0.25rem;
+
+  flex-shrink: 0;
 `;
 
 export const SelectCounter = styled.div`

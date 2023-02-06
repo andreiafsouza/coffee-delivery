@@ -19,8 +19,8 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   img,
-picture,
-svg {
+  picture,
+  svg {
   max-width: 100%;
   display: block;
 }
