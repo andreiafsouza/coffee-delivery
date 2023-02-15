@@ -8,7 +8,36 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   html {
-    background:  ${(props) => props.theme.base.background};
+  background: ${(props) => props.theme.base.background};
+        
+    /* Webkit */
+    ::-webkit-scrollbar {
+      width: 8px;
+      background-color: ${(props) => props.theme.base.card};
+    }
+        
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: ${(props) => props.theme.base.label};
+    }
+        
+    /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: 
+    ${(props) => props.theme.base.label} ${(props) => props.theme.base.card};
+        
+    /* Internet Explorer */
+    scrollbar-base-color: ${(props) => props.theme.base.card};
+    scrollbar-3dlight-color: ${(props) => props.theme.base.card};
+    scrollbar-darkshadow-color: ${(props) => props.theme.base.card};
+    scrollbar-highlight-color: ${(props) => props.theme.base.card};
+    scrollbar-shadow-color: ${(props) => props.theme.base.card};
+    scrollbar-arrow-color: ${(props) => props.theme.base.label};
+  }
+
+  :focus {
+    outline: 0;
+   /*  box-shadow: 0 0 0 2px ${(props) => props.theme.brand.purple}; */
   }
 
   body {
@@ -21,7 +50,7 @@ export const GlobalStyle = createGlobalStyle`
   img,
   picture,
   svg {
-  max-width: 100%;
-  display: block;
-}
+    max-width: 100%;
+    display: block;
+  }
 `;

@@ -44,8 +44,20 @@ const InputBase = styled.input`
   background: ${(props) => props.theme.base.input};
   border-radius: 4px;
 
+  :focus {
+    outline: 0;
+    box-shadow: 0 0 0 0px;
+  }
+
   ::placeholder {
     color: ${(props) => props.theme.base.label};
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover,
+    &:focus-within {
+      border: 1px solid ${(props) => props.theme.brand.yellow};
+    }
   }
 `;
 

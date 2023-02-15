@@ -10,9 +10,13 @@ export const QuantitySelect = () => {
   const theme = useTheme();
   return (
     <S.SelectContainer>
-      <Minus size={14} weight="bold" color={theme.brand.purple} />
+      <S.IconContainer>
+        <Minus size={14} weight="bold" />
+      </S.IconContainer>
       <S.SelectCounter>{count}</S.SelectCounter>
-      <Plus size={14} weight="bold" color={theme.brand.purple} />
+      <S.IconContainer>
+        <Plus size={14} weight="bold" />
+      </S.IconContainer>
     </S.SelectContainer>
   );
 };

@@ -20,10 +20,25 @@ export const Container = styled.button<ContainerProps>`
   border: none;
   padding-block: ${(props) => (props.size === "small" ? "0.40625rem" : "1rem")};
   padding-inline: 0.5rem;
-
   background: ${(props) =>
     props.background ? props.background : props.theme.base.button};
   border-radius: 6px;
+
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+
+  :focus {
+    background: ${(props) => props.theme.brand.purpleLight};
+    box-shadow: 0 0 0 2px ${(props) => props.theme.brand.purple};
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover:not(:focus) {
+      transition: all 0.1s ease-in-out;
+      background: ${(props) => props.theme.base.hover};
+      color: ${(props) => props.theme.base.subtitle};
+    }
+  }
 `;
 
 export const IconContainer = styled.div`

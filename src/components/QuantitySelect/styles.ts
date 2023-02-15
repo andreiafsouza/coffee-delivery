@@ -13,6 +13,24 @@ export const SelectContainer = styled.div`
   flex-shrink: 0;
 `;
 
+export const IconContainer = styled.div`
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+
+  svg {
+    color: ${(props) => props.theme.brand.purple};
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transition: all 0.1s ease-in-out;
+      svg {
+        color: ${(props) => props.theme.brand.purpleDark};
+      }
+    }
+  }
+`;
+
 export const SelectCounter = styled.div`
   min-width: 1.25rem;
   min-height: 1.3125rem;

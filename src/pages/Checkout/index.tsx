@@ -10,6 +10,7 @@ import { useTheme } from "styled-components";
 import { AddressForm } from "./components/AddressForm";
 import { Button } from "../../components/Button";
 import { CheckoutCoffeeCard } from "./components/CheckoutCoffeeCard";
+import { NavLink } from "react-router-dom";
 
 export const Checkout = () => {
   const theme = useTheme();
@@ -80,7 +81,13 @@ export const Checkout = () => {
               <span>R$ 33,20</span>
             </S.TotalPriceContainer>
           </S.TotalValuesContainer>
-          <S.ConfirmButton>Confirmar pedido</S.ConfirmButton>
+          <NavLink
+            to="/success"
+            title="Confirmar pedido"
+            style={{ textDecoration: "none" }}
+          >
+            <S.ConfirmButton>Confirmar pedido</S.ConfirmButton>
+          </NavLink>
         </S.SelectedCoffeContainer>
       </S.CardContainer>
     </S.Container>

@@ -3,15 +3,14 @@ import styled from "styled-components";
 export const Container = styled.main`
   max-width: 74rem;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1rem 1rem;
   gap: 2rem;
   display: grid;
-
   justify-content: center;
 
   @media (min-width: 60em) {
     grid-template-columns: 57.14285711429% 1fr;
-    padding: 0 2rem;
+    padding: 0 2rem 2rem;
   }
 `;
 
@@ -19,6 +18,16 @@ export const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+
+  &:last-child {
+    grid-row: 1;
+  }
+
+  @media (min-width: 60em) {
+    &:last-child {
+      grid-row: auto;
+    }
+  }
 `;
 
 export const CheckoutContainer = styled.div`
@@ -37,7 +46,6 @@ export const CheckoutTitle = styled.p`
 `;
 
 export const AddressCard = styled.div`
-  /*   max-width: 40rem; */
   padding: 2.5rem;
   background: ${(props) => props.theme.base.card};
   border-radius: 6px;
@@ -62,7 +70,6 @@ export const Subtitle = styled.p`
 `;
 
 export const PaymentCard = styled.div`
-  /*  max-width: 40rem; */
   padding: 2.5rem;
   background: ${(props) => props.theme.base.card};
   border-radius: 6px;
@@ -78,7 +85,6 @@ export const ButtonContainer = styled.div`
 `;
 
 export const SelectedCoffeContainer = styled.div`
-  max-width: 28rem;
   padding: 2.5rem;
   border-radius: 6px 36px 6px 36px;
   background: ${(props) => props.theme.base.card};
@@ -117,18 +123,26 @@ export const TotalPriceContainer = styled(ItemContainerBase)`
   color: ${(props) => props.theme.base.subtitle};
 `;
 
-export const ConfirmButton = styled.button`
+export const ConfirmButton = styled.div`
   width: 100%;
   font-family: ${(props) => props.theme.font.main};
   background: ${(props) => props.theme.brand.yellow};
   color: ${(props) => props.theme.base.white};
   font-size: ${(props) => props.theme.fontSize[14]};
   font-weight: 700;
-  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   padding-block: 0.75rem;
   text-transform: uppercase;
   border-radius: 6px;
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transition: all 0.1s ease-in-out;
+      background: ${(props) => props.theme.brand.yellowDark};
+    }
+  }
 `;

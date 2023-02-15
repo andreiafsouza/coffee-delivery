@@ -100,4 +100,14 @@ export const ShoppingCartAdd = styled.button`
   background: ${(props) => props.theme.brand.purpleDark};
   border-radius: 6px;
   border: none;
+
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transition: all 0.1s ease-in-out;
+      background: ${(props) => props.theme.brand.purple};
+    }
+  }
 `;
