@@ -4,7 +4,7 @@ import * as S from "./styles";
 import { MapPin, ShoppingCart } from "phosphor-react";
 import { useTheme } from "styled-components";
 import { NavLink } from "react-router-dom";
-import { Bradge } from "../Badge";
+import { Badge } from "../Badge";
 
 interface HeaderContainerProps {
   navPadding: boolean;
@@ -42,7 +42,7 @@ export const Header = () => {
           </S.LocationTag>
           <NavLink to="/checkout" title="Checkout">
             <S.ShoppingCartLink>
-              <Bradge />
+              <Badge />
               <ShoppingCart
                 size={22}
                 weight="fill"

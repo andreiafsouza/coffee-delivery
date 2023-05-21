@@ -67,6 +67,7 @@ export const CoffeeTitle = styled.p`
 
 export const CoffeeDescription = styled.p`
   text-align: center;
+  font-size: ${(props) => props.theme.fontSize[14]};
 `;
 
 export const ActionContainer = styled.div`
@@ -110,4 +111,50 @@ export const ShoppingCartAdd = styled.button`
       background: ${(props) => props.theme.brand.purple};
     }
   }
+`;
+
+/* QUANTITY SELECTOR */
+
+export const SelectContainer = styled.div`
+  max-width: 4.5rem;
+  display: flex;
+  align-items: center;
+  background: ${(props) => props.theme.base.button};
+  border-radius: 6px;
+
+  padding: 0.53125rem 0.5rem;
+  gap: 0.25rem;
+
+  flex-shrink: 0;
+`;
+
+export const IconContainer = styled.button`
+  transition: all 0.1s ease-in-out;
+  border: none;
+  background: none;
+
+  svg {
+    color: ${(props) => props.theme.brand.purple};
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transition: all 0.1s ease-in-out;
+      svg {
+        color: ${(props) => props.theme.brand.purpleDark};
+      }
+    }
+  }
+`;
+
+export const SelectCounter = styled.div`
+  min-width: 1.25rem;
+  min-height: 1.3125rem;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  color: ${(props) => props.theme.base.title};
 `;

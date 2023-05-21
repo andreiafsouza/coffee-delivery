@@ -1,9 +1,11 @@
 import * as S from "./styles";
+import useCart from "../../hooks/useCart";
 
-export const Bradge = () => {
+export const Badge = () => {
+  const { totalItems } = useCart();
   return (
     <S.Container>
-      <S.Number>1</S.Number>
+      <S.Number>{totalItems}</S.Number>
     </S.Container>
   );
 };

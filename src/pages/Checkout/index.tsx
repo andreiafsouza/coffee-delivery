@@ -12,8 +12,12 @@ import { Button } from "../../components/Button";
 import { CheckoutCoffeeCard } from "./components/CheckoutCoffeeCard";
 import { NavLink } from "react-router-dom";
 
+import useCart from "../../hooks/useCart";
+
 export const Checkout = () => {
   const theme = useTheme();
+  const { totalItems, totalPrice } = useCart();
+
   return (
     <S.Container>
       <S.CardContainer>
@@ -70,7 +74,7 @@ export const Checkout = () => {
           <S.TotalValuesContainer>
             <S.ItemsContainer>
               <span>Total de itens</span>
-              <span>R$ 29,70</span>
+              <span>{`R$ ${totalPrice}`}</span>
             </S.ItemsContainer>
             <S.ShippingContainer>
               <span>Entrega</span>
