@@ -1,20 +1,14 @@
-import { useEffect } from "react";
 import * as S from "./styles";
 import { useTheme } from "styled-components";
 import coffeeMug from "../../assets/coffeeMug.png";
 import useCart from "../../hooks/useCart";
 import useCoffees from "../../hooks/useCoffees";
-
-import { CoffeeCard } from "./components/CoffeeCard";
-
 import { ShoppingCart, Package, Timer, Coffee } from "phosphor-react";
-import { useState } from "react";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import CoffeeCard from "./components/CoffeeCard";
 
-export const Home = () => {
+const Home = () => {
   const theme = useTheme();
   const { dispatch, REDUCER_ACTIONS, cart } = useCart();
-  const [loading, setLoading] = useState(true);
   const { coffees } = useCoffees();
 
   const introItems = [
@@ -39,12 +33,6 @@ export const Home = () => {
       color: theme.brand.purple,
     },
   ];
-
-  useEffect(() => {
-    if (coffees?.length) {
-      setLoading(false);
-    }
-  }, [coffees]);
 
   return (
     <S.HomeContainer>
@@ -98,27 +86,24 @@ export const Home = () => {
       <S.CoffeeListContainer>
         <S.CoffeeListTitle>Nossos Cafés</S.CoffeeListTitle>
         <S.CoffeeList>
-          {loading ? (
-            <LoadingSpinner />
-          ) : (
-            coffees.map((coffee) => {
-              const inCart: boolean = cart.some(
-                (item) => item.sku === coffee.sku
-              );
-
-              return (
-                <CoffeeCard
-                  key={coffee.sku}
-                  coffee={coffee}
-                  dispatch={dispatch}
-                  REDUCER_ACTIONS={REDUCER_ACTIONS}
-                  inCart={inCart}
-                />
-              );
-            })
-          )}
+          {coffees?.map((coffee) => {
+            const inCart: boolean = cart.some(
+              (item) => item.sku === coffee.sku
+            );
+            return (
+              <CoffeeCard
+                key={coffee.sku}
+                coffee={coffee}
+                dispatch={dispatch}
+                REDUCER_ACTIONS={REDUCER_ACTIONS}
+                inCart={inCart}
+              />
+            );
+          })}
         </S.CoffeeList>
       </S.CoffeeListContainer>
     </S.HomeContainer>
   );
 };
+
+export default Home;

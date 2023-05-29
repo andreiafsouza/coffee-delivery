@@ -28,7 +28,7 @@ const Spinner = styled.div`
   animation: ${spinAnimation} 0.8s linear infinite;
 `;
 
-const LoadingSpinner: React.FC = () => {
+const LoadingSpinner = () => {
   return (
     <SpinnerContainer>
       <Spinner />

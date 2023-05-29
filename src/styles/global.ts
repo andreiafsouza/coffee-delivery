@@ -45,6 +45,8 @@ export const GlobalStyle = createGlobalStyle`
     font-family: ${(props) => props.theme.font.main};
     font-size: ${(props) => props.theme.fontSize[16]};
     line-height: 130%;
+
+    overflow-y: scroll;
   }
 
   img,

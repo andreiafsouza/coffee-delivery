@@ -14,7 +14,7 @@ import { NavLink } from "react-router-dom";
 
 import useCart from "../../hooks/useCart";
 
-export const Checkout = () => {
+const Checkout = () => {
   const theme = useTheme();
   const { totalItems, totalPrice } = useCart();
 
@@ -97,3 +97,5 @@ export const Checkout = () => {
     </S.Container>
   );
 };
+
+export default Checkout;

@@ -9,7 +9,7 @@ interface Props {
   color?: string;
 }
 
-export const Success = ({ color }: Props) => {
+const Success = ({ color }: Props) => {
   const theme = useTheme();
   return (
     <S.Container>
@@ -67,3 +67,5 @@ export const Success = ({ color }: Props) => {
     </S.Container>
   );
 };
+
+export default Success;

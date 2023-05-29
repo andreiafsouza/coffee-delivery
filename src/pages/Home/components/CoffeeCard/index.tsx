@@ -1,6 +1,5 @@
 import * as S from "./styles";
 
-import americano from "../../../../assets/cafe-americano.png";
 import { Plus, Minus } from "phosphor-react";
 
 import { MapPin, ShoppingCart } from "phosphor-react";
@@ -21,7 +20,7 @@ type PropsType = {
   inCart: boolean;
 };
 
-export const CoffeeCard = ({
+const CoffeeCard = ({
   coffee,
   dispatch,
   REDUCER_ACTIONS,
@@ -60,7 +59,6 @@ export const CoffeeCard = ({
             <S.CoffeeDescription>{coffee.description}</S.CoffeeDescription>
             <S.ActionContainer>
               <S.CoffePrice>
-                {/* <span>R$</span>{" "} */}
                 {new Intl.NumberFormat("pt-BR", {
                   style: "currency",
                   currency: "BRL",
@@ -89,3 +87,5 @@ export const CoffeeCard = ({
     </S.CoffeeListContainer>
   );
 };
+
+export default CoffeeCard;
