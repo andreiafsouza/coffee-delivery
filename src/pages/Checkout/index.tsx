@@ -1,4 +1,5 @@
 import * as S from "./styles";
+import { useState } from "react";
 import {
   MapPinLine,
   CurrencyDollar,
@@ -16,7 +17,13 @@ import useCart from "../../hooks/useCart";
 
 const Checkout = () => {
   const theme = useTheme();
-  const { totalItems, totalPrice } = useCart();
+  const { totalItems, totalPrice, dispatch, REDUCER_ACTIONS, cart } = useCart();
+  const [confirm, setConfirm] = useState<boolean>(false);
+
+  const handleSubmitOrder = () => {
+    dispatch({ type: REDUCER_ACTIONS.SUBMIT });
+    setConfirm(true);
+  };
 
   return (
     <S.Container>
@@ -69,8 +76,18 @@ const Checkout = () => {
       <S.CardContainer>
         <S.CheckoutTitle>Cafés selecionados</S.CheckoutTitle>
         <S.SelectedCoffeContainer>
-          <CheckoutCoffeeCard title="Expresso Tradicional" price="R$ 9,90" />
-          <CheckoutCoffeeCard title="Latte" price="R$ 9,90" />
+          {cart.map((coffee) => {
+            return (
+              <CheckoutCoffeeCard
+                key={coffee.sku}
+                coffee={coffee}
+                dispatch={dispatch}
+                REDUCER_ACTIONS={REDUCER_ACTIONS}
+                quantity={coffee.quantity}
+              />
+            );
+          })}
+
           <S.TotalValuesContainer>
             <S.ItemsContainer>
               <span>Total de itens</span>

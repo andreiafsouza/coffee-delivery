@@ -11,7 +11,7 @@ import {
   ReducerAction,
   ReducerActionType,
 } from "../../../../context/CartProvider";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 
 type PropsType = {
   coffee: CoffeeType;
@@ -26,23 +26,28 @@ const CoffeeCard = ({
   REDUCER_ACTIONS,
 }: PropsType): ReactElement => {
   const theme = useTheme();
+  const [coffeeQuantity, setCoffeeQuantity] = useState<number>(1);
 
   const img: string = new URL(
     `../../../../assets/${coffee.sku}.png`,
     import.meta.url
   ).href;
 
-  const onAddToCart = () =>
+  const handleAddToCart = () => {
     dispatch({
       type: REDUCER_ACTIONS.ADD,
-      payload: { ...coffee, quantity: 1 },
+      payload: { ...coffee, quantity: coffeeQuantity },
     });
+    setCoffeeQuantity(1);
+  };
 
-  const onRemoveFromCart = () =>
-    dispatch({
-      type: REDUCER_ACTIONS.REMOVE,
-      payload: { ...coffee, quantity: 1 },
-    });
+  const handleSubtractQuantity = () => {
+    coffeeQuantity > 1 && setCoffeeQuantity(coffeeQuantity - 1);
+  };
+
+  const handleAddQuantity = () => {
+    coffeeQuantity < 20 && setCoffeeQuantity(coffeeQuantity + 1);
+  };
 
   return (
     <S.CoffeeListContainer>
@@ -65,15 +70,15 @@ const CoffeeCard = ({
                 }).format(coffee.price)}
               </S.CoffePrice>
               <S.SelectContainer>
-                <S.IconContainer onClick={onRemoveFromCart}>
+                <S.IconContainer onClick={handleSubtractQuantity}>
                   <Minus size={14} weight="bold" />
                 </S.IconContainer>
-                <S.SelectCounter>{coffee.quantity}</S.SelectCounter>
-                <S.IconContainer onClick={onAddToCart}>
+                <S.SelectCounter>{coffeeQuantity}</S.SelectCounter>
+                <S.IconContainer onClick={handleAddQuantity}>
                   <Plus size={14} weight="bold" />
                 </S.IconContainer>
               </S.SelectContainer>
-              <S.ShoppingCartAdd onClick={onAddToCart}>
+              <S.ShoppingCartAdd onClick={handleAddToCart}>
                 <ShoppingCart
                   size={22}
                   weight="fill"
