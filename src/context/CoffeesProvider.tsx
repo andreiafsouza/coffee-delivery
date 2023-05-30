@@ -6,7 +6,6 @@ export type CoffeeType = {
   description: string;
   sku: string;
   price: number;
-  quantity: number;
 };
 
 const initialState: CoffeeType[] = [
@@ -16,7 +15,6 @@ const initialState: CoffeeType[] = [
     description: "O tradicional café feito com água quente e grãos moídos",
     sku: "item001",
     price: 9.9,
-    quantity: 10,
   },
   {
     name: "Expresso Americano",
@@ -24,7 +22,6 @@ const initialState: CoffeeType[] = [
     description: "Expresso diluído, menos intenso que o tradicional",
     sku: "item002",
     price: 9.9,
-    quantity: 10,
   },
   {
     name: "Expresso Cremoso",
@@ -32,7 +29,6 @@ const initialState: CoffeeType[] = [
     description: "Café expresso tradicional com espuma cremosa",
     sku: "item003",
     price: 9.9,
-    quantity: 10,
   },
   {
     name: "Expresso Gelado",
@@ -40,7 +36,6 @@ const initialState: CoffeeType[] = [
     description: "Bebida preparada com café expresso e cubos de gelo",
     sku: "item004",
     price: 9.9,
-    quantity: 10,
   },
   {
     name: "Café com Leite",
@@ -48,7 +43,6 @@ const initialState: CoffeeType[] = [
     description: "Meio a meio de expresso tradicional com leite vaporizado",
     sku: "item005",
     price: 10.9,
-    quantity: 10,
   },
   {
     name: "Latte",
@@ -57,7 +51,6 @@ const initialState: CoffeeType[] = [
       "Uma dose de café expresso com o dobro de leite e espuma cremosa",
     sku: "item006",
     price: 10.9,
-    quantity: 10,
   },
   {
     name: "Capuccino",
@@ -66,7 +59,6 @@ const initialState: CoffeeType[] = [
       "Bebida com canela feita de doses iguais de café, leite e espuma",
     sku: "item007",
     price: 10.9,
-    quantity: 10,
   },
   {
     name: "Macchiato",
@@ -75,7 +67,6 @@ const initialState: CoffeeType[] = [
       "Café expresso misturado com um pouco de leite quente e espuma",
     sku: "item008",
     price: 10.9,
-    quantity: 10,
   },
   {
     name: "Mocaccino",
@@ -83,7 +74,6 @@ const initialState: CoffeeType[] = [
     description: "Café expresso com calda de chocolate, pouco leite e espuma",
     sku: "item009",
     price: 12.9,
-    quantity: 10,
   },
   {
     name: "Chocolate Quente",
@@ -91,7 +81,6 @@ const initialState: CoffeeType[] = [
     description: "Bebida feita com chocolate dissolvido no leite quente e café",
     sku: "item010",
     price: 12.9,
-    quantity: 10,
   },
   {
     name: "Cubano",
@@ -100,7 +89,6 @@ const initialState: CoffeeType[] = [
       "Drink gelado de café expresso com rum, creme de leite e hortelã",
     sku: "item011",
     price: 12.9,
-    quantity: 10,
   },
   {
     name: "Havaiano",
@@ -108,7 +96,6 @@ const initialState: CoffeeType[] = [
     description: "Bebida adocicada preparada com café e leite de coco",
     sku: "item012",
     price: 12.9,
-    quantity: 10,
   },
   {
     name: "Árabe",
@@ -116,7 +103,6 @@ const initialState: CoffeeType[] = [
     description: "Bebida preparada com grãos de café árabe e especiarias",
     sku: "item013",
     price: 12.9,
-    quantity: 10,
   },
   {
     name: "Irlandês",
@@ -124,7 +110,6 @@ const initialState: CoffeeType[] = [
     description: "Bebida a base de café, uísque irlandês, açúcar e chantilly",
     sku: "item014",
     price: 12.9,
-    quantity: 10,
   },
 ];
 

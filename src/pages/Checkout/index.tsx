@@ -76,22 +76,35 @@ const Checkout = () => {
       <S.CardContainer>
         <S.CheckoutTitle>Cafés selecionados</S.CheckoutTitle>
         <S.SelectedCoffeContainer>
-          {cart.map((coffee) => {
-            return (
-              <CheckoutCoffeeCard
-                key={coffee.sku}
-                coffee={coffee}
-                dispatch={dispatch}
-                REDUCER_ACTIONS={REDUCER_ACTIONS}
-                quantity={coffee.quantity}
-              />
-            );
-          })}
+          {cart.length > 0 ? (
+            cart.map((coffee) => {
+              return (
+                <CheckoutCoffeeCard
+                  key={coffee.sku}
+                  coffee={coffee}
+                  dispatch={dispatch}
+                  REDUCER_ACTIONS={REDUCER_ACTIONS}
+                  quantity={coffee.quantity}
+                />
+              );
+            })
+          ) : (
+            <p
+              style={{
+                textAlign: "center",
+                backgroundColor: theme.base.button,
+                padding: 4,
+                borderRadius: 2,
+              }}
+            >
+              Nenhum café adicionado ao carrinho ainda.
+            </p>
+          )}
 
           <S.TotalValuesContainer>
             <S.ItemsContainer>
               <span>Total de itens</span>
-              <span>{`R$ ${totalPrice}`}</span>
+              <span>{totalPrice}</span>
             </S.ItemsContainer>
             <S.ShippingContainer>
               <span>Entrega</span>

@@ -34,19 +34,31 @@ const CoffeeCard = ({
   ).href;
 
   const handleAddToCart = () => {
+    //add to cart
     dispatch({
       type: REDUCER_ACTIONS.ADD,
-      payload: { ...coffee, quantity: coffeeQuantity },
+      payload: { ...coffee, quantity: 1 },
     });
-    setCoffeeQuantity(1);
-  };
-
-  const handleSubtractQuantity = () => {
-    coffeeQuantity > 1 && setCoffeeQuantity(coffeeQuantity - 1);
+    //and then change the quantity in cart context if needed
+    if (coffeeQuantity > 1) {
+      dispatch({
+        type: REDUCER_ACTIONS.QUANTITY,
+        payload: { ...coffee, quantity: coffeeQuantity },
+      });
+      setCoffeeQuantity(1);
+    }
   };
 
   const handleAddQuantity = () => {
-    coffeeQuantity < 20 && setCoffeeQuantity(coffeeQuantity + 1);
+    const newQuantity = coffeeQuantity + 1;
+    setCoffeeQuantity(newQuantity);
+  };
+
+  const handleRemoveQuantity = () => {
+    if (coffeeQuantity > 1) {
+      const newQuantity = coffeeQuantity - 1;
+      setCoffeeQuantity(newQuantity);
+    }
   };
 
   return (
@@ -70,7 +82,7 @@ const CoffeeCard = ({
                 }).format(coffee.price)}
               </S.CoffePrice>
               <S.SelectContainer>
-                <S.IconContainer onClick={handleSubtractQuantity}>
+                <S.IconContainer onClick={handleRemoveQuantity}>
                   <Minus size={14} weight="bold" />
                 </S.IconContainer>
                 <S.SelectCounter>{coffeeQuantity}</S.SelectCounter>

@@ -8,12 +8,24 @@ interface Props {
   color?: string;
   background?: string;
   size?: "small" | "default";
+  onClick?: () => void;
 }
 
-export const Button = ({ icon, title, size, color, background }: Props) => {
+export const Button = ({
+  icon,
+  title,
+  size,
+  color,
+  background,
+  onClick,
+}: Props) => {
   const theme = useTheme();
   return (
-    <S.Container size={size || "default"} background={background}>
+    <S.Container
+      size={size || "default"}
+      background={background}
+      onClick={() => onClick}
+    >
       <S.IconContainer>{icon}</S.IconContainer>
       <S.TextContainer color={color}>{title}</S.TextContainer>
     </S.Container>
