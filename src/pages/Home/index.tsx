@@ -87,16 +87,13 @@ const Home = () => {
         <S.CoffeeListTitle>Nossos Cafés</S.CoffeeListTitle>
         <S.CoffeeList>
           {coffees?.map((coffee) => {
-            const inCart: boolean = cart.some(
-              (item) => item.sku === coffee.sku
-            );
             return (
               <CoffeeCard
                 key={coffee.sku}
                 coffee={coffee}
                 dispatch={dispatch}
                 REDUCER_ACTIONS={REDUCER_ACTIONS}
-                inCart={inCart}
+                cart={cart}
               />
             );
           })}

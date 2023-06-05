@@ -4,10 +4,10 @@ export const Container = styled.div`
   display: flex;
 
   justify-content: space-between;
-  gap: 1.25rem;
+  gap: 1rem;
   flex-wrap: wrap;
 
-  padding-block: 1.5rem;
+  padding-block: 1rem;
   border-bottom: 1px solid ${(props) => props.theme.base.button};
 `;
 

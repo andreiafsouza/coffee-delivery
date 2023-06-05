@@ -18,6 +18,7 @@ export const defaultTheme = {
     text: "#574F4D",
     subtitle: "#403937",
     title: "#272221",
+    success: "#52BB50",
   },
   font: {
     main: `'Roboto', sans-serif`,

@@ -95,6 +95,7 @@ export const CoffePrice = styled.p`
 `;
 
 export const ShoppingCartAdd = styled.button`
+  position: relative;
   display: flex;
   align-items: center;
   padding: 0.5rem;
@@ -105,8 +106,13 @@ export const ShoppingCartAdd = styled.button`
   transition: all 0.1s ease-in-out;
   cursor: pointer;
 
+  :disabled {
+    background: ${(props) => props.theme.base.label};
+    cursor: auto;
+  }
+
   @media (hover: hover) and (pointer: fine) {
-    &:hover {
+    &:hover:not(:disabled) {
       transition: all 0.1s ease-in-out;
       background: ${(props) => props.theme.brand.purple};
     }

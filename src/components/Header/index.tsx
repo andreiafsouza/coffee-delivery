@@ -6,10 +6,6 @@ import { useTheme } from "styled-components";
 import { NavLink } from "react-router-dom";
 import { Badge } from "../Badge";
 
-interface HeaderContainerProps {
-  navPadding: boolean;
-}
-
 export const Header = () => {
   const theme = useTheme();
   const [navPadding, setNavpadding] = useState(false);

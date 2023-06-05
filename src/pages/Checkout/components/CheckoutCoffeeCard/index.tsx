@@ -12,7 +12,7 @@ import { Trash } from "phosphor-react";
 import { useTheme } from "styled-components";
 
 import americano from "../../../../assets/cafe-americano.png";
-import { Button } from "../../../../components/Button";
+import { CustomButton } from "../../../../components/CustomButton";
 
 type PropsType = {
   coffee: CartItemType;
@@ -75,13 +75,12 @@ export const CheckoutCoffeeCard = ({
                 <Plus size={14} weight="bold" />
               </S.IconContainer>
             </S.SelectContainer>
-            {/* <Button
+            <CustomButton
               icon={<Trash size={16} color={theme.brand.purple} />}
               title={"Remover"}
               size={"small"}
               onClick={handleRemoveFromCart}
-            /> */}
-            <button onClick={handleRemoveFromCart}>REMOVER</button>
+            />
           </S.ButtonContainer>
         </S.CoffeInfo>
       </S.CoffeInfoContainer>

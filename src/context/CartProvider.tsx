@@ -108,14 +108,9 @@ const useCartContext = (initialCartState: CartStateType) => {
     return previousValue + cartItem.quantity;
   }, 0);
 
-  const totalPrice = new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(
-    state.cart.reduce((previousValue, cartItem) => {
-      return previousValue + cartItem.quantity * cartItem.price;
-    }, 0)
-  );
+  const totalPrice = state.cart.reduce((previousValue, cartItem) => {
+    return previousValue + cartItem.quantity * cartItem.price;
+  }, 0);
 
   const cart = state.cart.sort((a, b) => {
     const itemA = Number(a.sku.slice(-3));
@@ -132,7 +127,7 @@ const initialCartContextState: UseCartContextType = {
   dispatch: () => {},
   REDUCER_ACTIONS: REDUCER_ACTION_TYPE,
   totalItems: 0,
-  totalPrice: "",
+  totalPrice: 0,
   cart: [],
 };
 

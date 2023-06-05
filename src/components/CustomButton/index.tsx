@@ -11,7 +11,7 @@ interface Props {
   onClick?: () => void;
 }
 
-export const Button = ({
+export const CustomButton = ({
   icon,
   title,
   size,
@@ -24,7 +24,7 @@ export const Button = ({
     <S.Container
       size={size || "default"}
       background={background}
-      onClick={() => onClick}
+      onClick={onClick}
     >
       <S.IconContainer>{icon}</S.IconContainer>
       <S.TextContainer color={color}>{title}</S.TextContainer>

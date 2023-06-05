@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface scrollProps {
+  scrollY: boolean;
+}
+
 export const Container = styled.main`
   max-width: 74rem;
   margin: 0 auto;
@@ -94,6 +98,30 @@ export const SelectedCoffeContainer = styled.div`
   }
 `;
 
+export const ProductListContainer = styled.div<scrollProps>`
+  max-height: ${(props) => (props.scrollY ? "18rem" : "auto")};
+  overflow-y: ${(props) => (props.scrollY ? "scroll" : "none")};
+  padding-right: ${(props) => (props.scrollY ? "0.3em" : "")};
+
+  /* Webkit */
+  ::-webkit-scrollbar {
+    width: 8px;
+    background-color: ${(props) => props.theme.base.card};
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: ${(props) => props.theme.base.label};
+  }
+
+  /* Firefox */
+  scrollbar-width: thin;
+
+  & > :first-child {
+    padding-top: 0;
+  }
+`;
+
 export const TotalValuesContainer = styled.div`
   padding-block: 1.5rem;
   display: grid;
@@ -145,4 +173,8 @@ export const ConfirmButton = styled.div`
       background: ${(props) => props.theme.brand.yellowDark};
     }
   }
+`;
+
+export const NoItemInCartTag = styled.p`
+  text-align: center;
 `;

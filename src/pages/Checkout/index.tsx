@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   MapPinLine,
   CurrencyDollar,
@@ -9,21 +9,27 @@ import {
 } from "phosphor-react";
 import { useTheme } from "styled-components";
 import { AddressForm } from "./components/AddressForm";
-import { Button } from "../../components/Button";
 import { CheckoutCoffeeCard } from "./components/CheckoutCoffeeCard";
 import { NavLink } from "react-router-dom";
 
 import useCart from "../../hooks/useCart";
+import { CustomButton } from "../../components/CustomButton";
 
 const Checkout = () => {
   const theme = useTheme();
   const { totalItems, totalPrice, dispatch, REDUCER_ACTIONS, cart } = useCart();
   const [confirm, setConfirm] = useState<boolean>(false);
+  const [deliveryValue, setDeliveryValue] = useState<number>(3.5);
+  const [scrollY, setScrollY] = useState(false);
 
   const handleSubmitOrder = () => {
     dispatch({ type: REDUCER_ACTIONS.SUBMIT });
     setConfirm(true);
   };
+
+  useEffect(() => {
+    setScrollY(cart.length > 3);
+  }, [cart]);
 
   return (
     <S.Container>
@@ -57,15 +63,15 @@ const Checkout = () => {
             </S.TextContainer>
           </S.TitleContainer>
           <S.ButtonContainer>
-            <Button
+            <CustomButton
               icon={<CreditCard size={16} color={theme.brand.purple} />}
               title={"Cartão de crédito"}
             />
-            <Button
+            <CustomButton
               icon={<Bank size={16} color={theme.brand.purple} />}
               title={"cartão de débito"}
             />
-            <Button
+            <CustomButton
               icon={<Money size={16} color={theme.brand.purple} />}
               title={"dinheiro"}
             />
@@ -76,43 +82,49 @@ const Checkout = () => {
       <S.CardContainer>
         <S.CheckoutTitle>Cafés selecionados</S.CheckoutTitle>
         <S.SelectedCoffeContainer>
-          {cart.length > 0 ? (
-            cart.map((coffee) => {
-              return (
-                <CheckoutCoffeeCard
-                  key={coffee.sku}
-                  coffee={coffee}
-                  dispatch={dispatch}
-                  REDUCER_ACTIONS={REDUCER_ACTIONS}
-                  quantity={coffee.quantity}
-                />
-              );
-            })
-          ) : (
-            <p
-              style={{
-                textAlign: "center",
-                backgroundColor: theme.base.button,
-                padding: 4,
-                borderRadius: 2,
-              }}
-            >
-              Nenhum café adicionado ao carrinho ainda.
-            </p>
-          )}
-
+          <S.ProductListContainer scrollY={scrollY}>
+            {cart.length > 0 ? (
+              cart.map((coffee) => {
+                return (
+                  <CheckoutCoffeeCard
+                    key={coffee.sku}
+                    coffee={coffee}
+                    dispatch={dispatch}
+                    REDUCER_ACTIONS={REDUCER_ACTIONS}
+                  />
+                );
+              })
+            ) : (
+              <S.NoItemInCartTag>
+                Nenhum café adicionado ao carrinho ainda.
+              </S.NoItemInCartTag>
+            )}
+          </S.ProductListContainer>
           <S.TotalValuesContainer>
             <S.ItemsContainer>
+              <span>Quantidade de Itens</span>
+              {totalItems}
+            </S.ItemsContainer>
+            <S.ItemsContainer>
               <span>Total de itens</span>
-              <span>{totalPrice}</span>
+              {new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(totalPrice)}
             </S.ItemsContainer>
             <S.ShippingContainer>
               <span>Entrega</span>
-              <span>R$ 3,50</span>
+              {new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(deliveryValue)}
             </S.ShippingContainer>
             <S.TotalPriceContainer>
               <span>Total</span>
-              <span>R$ 33,20</span>
+              {new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(deliveryValue + totalPrice)}
             </S.TotalPriceContainer>
           </S.TotalValuesContainer>
           <NavLink
