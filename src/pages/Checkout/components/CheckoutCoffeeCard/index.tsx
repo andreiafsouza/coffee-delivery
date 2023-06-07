@@ -1,18 +1,15 @@
-import useCart from "../../../../hooks/useCart";
 import {
   CartItemType,
   ReducerAction,
   ReducerActionType,
 } from "../../../../context/CartProvider";
-import { Plus, Minus } from "phosphor-react";
-import { useState, ChangeEvent } from "react";
+import { useState } from "react";
 import * as S from "./styles";
 import { QuantitySelect } from "../../../../components/QuantitySelect";
 import { Trash } from "phosphor-react";
 import { useTheme } from "styled-components";
-
-import americano from "../../../../assets/cafe-americano.png";
 import { CustomButton } from "../../../../components/CustomButton";
+import { formatNumberToCurrency } from "../../../../utils";
 
 type PropsType = {
   coffee: CartItemType;
@@ -42,7 +39,7 @@ export const CheckoutCoffeeCard = ({
     });
   };
 
-  const handleRemoveQuantity = () => {
+  const handleSubtractQuantity = () => {
     if (coffeeQuantity > 1) {
       const newQuantity = coffeeQuantity - 1;
       setCoffeeQuantity(newQuantity);
@@ -66,15 +63,11 @@ export const CheckoutCoffeeCard = ({
         <S.CoffeInfo>
           <S.TextContainer>{coffee.name}</S.TextContainer>
           <S.ButtonContainer>
-            <S.SelectContainer>
-              <S.IconContainer onClick={handleRemoveQuantity}>
-                <Minus size={14} weight="bold" />
-              </S.IconContainer>
-              <S.SelectCounter>{coffee.quantity}</S.SelectCounter>
-              <S.IconContainer onClick={handleAddQuantity}>
-                <Plus size={14} weight="bold" />
-              </S.IconContainer>
-            </S.SelectContainer>
+            <QuantitySelect
+              quantity={coffee.quantity}
+              onAddQuantity={handleAddQuantity}
+              onSubtractQuantity={handleSubtractQuantity}
+            />
             <CustomButton
               icon={<Trash size={16} color={theme.brand.purple} />}
               title={"Remover"}
@@ -84,12 +77,7 @@ export const CheckoutCoffeeCard = ({
           </S.ButtonContainer>
         </S.CoffeInfo>
       </S.CoffeInfoContainer>
-      <S.PriceTag>
-        {new Intl.NumberFormat("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }).format(coffee.price)}
-      </S.PriceTag>
+      <S.PriceTag>{formatNumberToCurrency(coffee.price)}</S.PriceTag>
     </S.Container>
   );
 };

@@ -13,9 +13,11 @@ export const SelectContainer = styled.div`
   flex-shrink: 0;
 `;
 
-export const IconContainer = styled.div`
+export const IconContainer = styled.button`
   transition: all 0.1s ease-in-out;
-  cursor: pointer;
+  border: none;
+  border-radius: 1000px;
+  background: none;
 
   svg {
     color: ${(props) => props.theme.brand.purple};
@@ -23,7 +25,8 @@ export const IconContainer = styled.div`
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      transition: all 0.1s ease-in-out;
+      transition: color 0.1s ease-in-out;
+      background: ${(props) => props.theme.base.hover};
       svg {
         color: ${(props) => props.theme.brand.purpleDark};
       }

@@ -1,20 +1,24 @@
 import * as S from "./styles";
-
 import { Plus, Minus } from "phosphor-react";
 
-import { useTheme } from "styled-components";
-import { useState } from "react";
+type PropsType = {
+  quantity: number;
+  onAddQuantity: () => void;
+  onSubtractQuantity: () => void;
+};
 
-export const QuantitySelect = () => {
-  const [count, setCount] = useState(1);
-  const theme = useTheme();
+export const QuantitySelect = ({
+  quantity,
+  onAddQuantity,
+  onSubtractQuantity,
+}: PropsType) => {
   return (
     <S.SelectContainer>
-      <S.IconContainer>
+      <S.IconContainer onClick={onSubtractQuantity}>
         <Minus size={14} weight="bold" />
       </S.IconContainer>
-      <S.SelectCounter>{count}</S.SelectCounter>
-      <S.IconContainer>
+      <S.SelectCounter>{quantity}</S.SelectCounter>
+      <S.IconContainer onClick={onAddQuantity}>
         <Plus size={14} weight="bold" />
       </S.IconContainer>
     </S.SelectContainer>

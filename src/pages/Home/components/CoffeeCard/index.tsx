@@ -1,7 +1,4 @@
 import * as S from "./styles";
-
-import { Plus, Minus } from "phosphor-react";
-
 import { ShoppingCart } from "phosphor-react";
 import { useTheme } from "styled-components";
 import { CoffeeType } from "../../../../context/CoffeesProvider";
@@ -10,9 +7,11 @@ import {
   ReducerAction,
   ReducerActionType,
 } from "../../../../context/CartProvider";
-import { ReactElement, useState, useEffect } from "react";
+import { ReactElement, useState } from "react";
 import { CheckMark } from "../../../../components/CheckMark";
 import { InCartModalMessage } from "../InCartModalMessage";
+import { QuantitySelect } from "../../../../components/QuantitySelect";
+import { formatNumberToCurrency } from "../../../../utils";
 
 type PropsType = {
   coffee: CoffeeType;
@@ -55,7 +54,7 @@ const CoffeeCard = ({
     if (!inCart) {
       dispatch({
         type: REDUCER_ACTIONS.ADD,
-        payload: { ...coffee, quantity: 1 },
+        payload: { ...coffee, quantity: coffeeQuantity },
       });
       dispatch({
         type: REDUCER_ACTIONS.QUANTITY,
@@ -64,9 +63,13 @@ const CoffeeCard = ({
     } else {
       dispatch({
         type: REDUCER_ACTIONS.QUANTITY,
-        payload: { ...coffee, quantity: coffeeQuantity },
+        payload: {
+          ...coffee,
+          quantity: item ? coffeeQuantity + item?.quantity : coffeeQuantity,
+        },
       });
     }
+    setCoffeeQuantity(1);
     onShowInCartMessage();
   };
 
@@ -75,16 +78,12 @@ const CoffeeCard = ({
     setCoffeeQuantity(newQuantity);
   };
 
-  const handleRemoveQuantity = () => {
+  const handleSubtractQuantity = () => {
     if (coffeeQuantity > 1) {
       const newQuantity = coffeeQuantity - 1;
       setCoffeeQuantity(newQuantity);
     }
   };
-
-  useEffect(() => {
-    setCoffeeQuantity(item ? item.quantity : 1);
-  }, [cart]);
 
   return (
     <>
@@ -102,25 +101,17 @@ const CoffeeCard = ({
               <S.CoffeeDescription>{coffee.description}</S.CoffeeDescription>
               <S.ActionContainer>
                 <S.CoffePrice>
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(coffee.price)}
+                  {formatNumberToCurrency(coffee.price)}
                 </S.CoffePrice>
-                <S.SelectContainer>
-                  <S.IconContainer onClick={handleRemoveQuantity}>
-                    <Minus size={14} weight="bold" />
-                  </S.IconContainer>
-                  <S.SelectCounter>{coffeeQuantity}</S.SelectCounter>
-                  <S.IconContainer onClick={handleAddQuantity}>
-                    <Plus size={14} weight="bold" />
-                  </S.IconContainer>
-                </S.SelectContainer>
+                <QuantitySelect
+                  quantity={coffeeQuantity}
+                  onAddQuantity={handleAddQuantity}
+                  onSubtractQuantity={handleSubtractQuantity}
+                />
                 <S.ShoppingCartAdd
                   aria-label="adicionar ao carrinho"
                   title="Adicionar ao Carrinho"
                   onClick={handleAddToCart}
-                  disabled={coffeeQuantity === item?.quantity}
                 >
                   {inCart ? <CheckMark /> : null}
                   <ShoppingCart
