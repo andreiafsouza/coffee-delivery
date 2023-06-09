@@ -1,47 +1,47 @@
 import * as S from "./styles";
 import { ShoppingCart } from "phosphor-react";
 import { useTheme } from "styled-components";
-import { CoffeeType } from "../../../../context/CoffeesProvider";
+import { ProductType } from "../../context/ProductProvider";
 import {
   CartItemType,
   ReducerAction,
   ReducerActionType,
-} from "../../../../context/CartProvider";
+} from "../../context/CartProvider";
 import { ReactElement, useState } from "react";
-import { CheckMark } from "../../../../components/CheckMark";
+import { CheckMark } from "../CheckMark";
 import { InCartModalMessage } from "../InCartModalMessage";
-import { QuantitySelect } from "../../../../components/QuantitySelect";
-import { formatNumberToCurrency } from "../../../../utils";
+import { QuantitySelect } from "../QuantitySelect";
+import { formatNumberToCurrency } from "../../utils";
 
 type PropsType = {
-  coffee: CoffeeType;
+  product: ProductType;
   dispatch: React.Dispatch<ReducerAction>;
   REDUCER_ACTIONS: ReducerActionType;
   cart: CartItemType[];
 };
 
-const CoffeeCard = ({
-  coffee,
+const ProductCard = ({
+  product,
   dispatch,
   REDUCER_ACTIONS,
   cart,
 }: PropsType): ReactElement => {
   const theme = useTheme();
 
-  const [coffeeQuantity, setCoffeeQuantity] = useState<number>(1);
+  const [productQuantity, setProductQuantity] = useState<number>(1);
   const [showInCartMessage, setShowInCartMessage] = useState(false);
   const item: CartItemType | undefined = cart.find(
-    (item) => item.sku === coffee.sku
+    (item) => item.sku === product.sku
   );
-  const inCart: boolean = cart.some((item) => item.sku === coffee.sku);
+  const inCart: boolean = cart.some((item) => item.sku === product.sku);
 
   const img: string = new URL(
-    `../../../../assets/${coffee.sku}.png`,
+    `../../../../assets/${product.sku}.png`,
     import.meta.url
   ).href;
 
   const onShowInCartMessage = () => {
-    if (coffeeQuantity !== item?.quantity) {
+    if (productQuantity !== item?.quantity) {
       setShowInCartMessage(true);
       setTimeout(() => {
         setShowInCartMessage(false);
@@ -54,57 +54,57 @@ const CoffeeCard = ({
     if (!inCart) {
       dispatch({
         type: REDUCER_ACTIONS.ADD,
-        payload: { ...coffee, quantity: coffeeQuantity },
+        payload: { ...product, quantity: productQuantity },
       });
       dispatch({
         type: REDUCER_ACTIONS.QUANTITY,
-        payload: { ...coffee, quantity: coffeeQuantity },
+        payload: { ...product, quantity: productQuantity },
       });
     } else {
       dispatch({
         type: REDUCER_ACTIONS.QUANTITY,
         payload: {
-          ...coffee,
-          quantity: item ? coffeeQuantity + item?.quantity : coffeeQuantity,
+          ...product,
+          quantity: item ? productQuantity + item?.quantity : productQuantity,
         },
       });
     }
-    setCoffeeQuantity(1);
+    setProductQuantity(1);
     onShowInCartMessage();
   };
 
   const handleAddQuantity = () => {
-    const newQuantity = coffeeQuantity + 1;
-    setCoffeeQuantity(newQuantity);
+    const newQuantity = productQuantity + 1;
+    setProductQuantity(newQuantity);
   };
 
   const handleSubtractQuantity = () => {
-    if (coffeeQuantity > 1) {
-      const newQuantity = coffeeQuantity - 1;
-      setCoffeeQuantity(newQuantity);
+    if (productQuantity > 1) {
+      const newQuantity = productQuantity - 1;
+      setProductQuantity(newQuantity);
     }
   };
 
   return (
     <>
-      <S.CoffeeListContainer>
-        <S.CoffeeCardContainer>
+      <S.ProductListContainer>
+        <S.ProductCardContainer>
           <S.ImageContainer>
-            <S.CoffeeCardImage src={img} alt={`a cup of ${coffee.name}`} />
+            <S.ProductCardImage src={img} alt={`a cup of ${product.name}`} />
           </S.ImageContainer>
-          <S.CoffeeCardContent>
+          <S.ProductCardContent>
             <S.Content>
-              <S.CoffeeTypeTagContainer>
-                <S.CoffeeTypeTag>{coffee.type}</S.CoffeeTypeTag>
-              </S.CoffeeTypeTagContainer>
-              <S.CoffeeTitle>{coffee.name}</S.CoffeeTitle>
-              <S.CoffeeDescription>{coffee.description}</S.CoffeeDescription>
+              <S.ProductTypeTagContainer>
+                <S.ProductTypeTag>{product.type}</S.ProductTypeTag>
+              </S.ProductTypeTagContainer>
+              <S.ProductTitle>{product.name}</S.ProductTitle>
+              <S.ProductDescription>{product.description}</S.ProductDescription>
               <S.ActionContainer>
                 <S.CoffePrice>
-                  {formatNumberToCurrency(coffee.price)}
+                  {formatNumberToCurrency(product.price)}
                 </S.CoffePrice>
                 <QuantitySelect
-                  quantity={coffeeQuantity}
+                  quantity={productQuantity}
                   onAddQuantity={handleAddQuantity}
                   onSubtractQuantity={handleSubtractQuantity}
                 />
@@ -122,12 +122,12 @@ const CoffeeCard = ({
                 </S.ShoppingCartAdd>
               </S.ActionContainer>
             </S.Content>
-          </S.CoffeeCardContent>
-        </S.CoffeeCardContainer>
-      </S.CoffeeListContainer>
+          </S.ProductCardContent>
+        </S.ProductCardContainer>
+      </S.ProductListContainer>
       {showInCartMessage ? <InCartModalMessage /> : null}
     </>
   );
 };
 
-export default CoffeeCard;
+export default ProductCard;

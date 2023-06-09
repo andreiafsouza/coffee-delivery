@@ -9,7 +9,7 @@ import {
 } from "phosphor-react";
 import { useTheme } from "styled-components";
 import { AddressForm } from "./components/AddressForm";
-import { CheckoutCoffeeCard } from "./components/CheckoutCoffeeCard";
+import { ProductCheckoutCard } from "./components/ProductCheckoutCard";
 import { NavLink } from "react-router-dom";
 
 import useCart from "../../hooks/useCart";
@@ -84,11 +84,11 @@ const Checkout = () => {
         <S.SelectedCoffeContainer>
           <S.ProductListContainer scrollY={scrollY}>
             {cart.length > 0 ? (
-              cart.map((coffee) => {
+              cart.map((item) => {
                 return (
-                  <CheckoutCoffeeCard
-                    key={coffee.sku}
-                    coffee={coffee}
+                  <ProductCheckoutCard
+                    key={item.sku}
+                    product={item}
                     dispatch={dispatch}
                     REDUCER_ACTIONS={REDUCER_ACTIONS}
                   />
@@ -131,6 +131,7 @@ const Checkout = () => {
             to="/success"
             title="Confirmar pedido"
             style={{ textDecoration: "none" }}
+            onClick={handleSubmitOrder}
           >
             <S.ConfirmButton>Confirmar pedido</S.ConfirmButton>
           </NavLink>

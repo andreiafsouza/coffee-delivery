@@ -11,7 +11,7 @@ export const Container = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.base.button};
 `;
 
-export const CoffeInfoContainer = styled.div`
+export const ProductInfoContainer = styled.div`
   display: flex;
   gap: 1.25rem;
 `;
@@ -21,7 +21,7 @@ export const ImageContainer = styled.img`
   max-height: 4rem;
 `;
 
-export const CoffeInfo = styled.div`
+export const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;

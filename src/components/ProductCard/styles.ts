@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export const CoffeeListContainer = styled.div`
+export const ProductListContainer = styled.div`
   display: grid;
 `;
 
-export const CoffeeCardContainer = styled.div`
+export const ProductCardContainer = styled.div`
   position: relative;
 `;
 
@@ -14,11 +14,11 @@ export const ImageContainer = styled.div`
   transform: translateX(-50%);
 `;
 
-export const CoffeeCardImage = styled.img`
+export const ProductCardImage = styled.img`
   min-width: 7.5rem;
 `;
 
-export const CoffeeCardContent = styled.div`
+export const ProductCardContent = styled.div`
   min-height: 19.375rem;
   min-width: 16rem;
 
@@ -39,12 +39,12 @@ export const Content = styled.div`
   margin: 0 auto;
 `;
 
-export const CoffeeTypeTagContainer = styled.div`
+export const ProductTypeTagContainer = styled.div`
   min-height: 1.3125rem;
   margin-bottom: 1rem;
 `;
 
-export const CoffeeTypeTag = styled.div`
+export const ProductTypeTag = styled.div`
   text-transform: uppercase;
   color: ${(props) => props.theme.brand.yellowDark};
   background: ${(props) => props.theme.brand.yellowLight};
@@ -56,7 +56,7 @@ export const CoffeeTypeTag = styled.div`
   border-radius: 100px;
 `;
 
-export const CoffeeTitle = styled.p`
+export const ProductTitle = styled.p`
   font-family: ${(props) => props.theme.font.display};
   color: ${(props) => props.theme.base.subtitle};
   font-size: ${(props) => props.theme.fontSize[20]};
@@ -65,7 +65,7 @@ export const CoffeeTitle = styled.p`
   padding-bottom: 0.5rem;
 `;
 
-export const CoffeeDescription = styled.p`
+export const ProductDescription = styled.p`
   text-align: center;
   font-size: ${(props) => props.theme.fontSize[14]};
 `;

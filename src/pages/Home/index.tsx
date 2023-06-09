@@ -2,14 +2,14 @@ import * as S from "./styles";
 import { useTheme } from "styled-components";
 import coffeeMug from "../../assets/coffeeMug.png";
 import useCart from "../../hooks/useCart";
-import useCoffees from "../../hooks/useCoffees";
+import useProduct from "../../hooks/useProduct";
 import { ShoppingCart, Package, Timer, Coffee } from "phosphor-react";
-import CoffeeCard from "./components/CoffeeCard";
+import ProductCard from "../../components/ProductCard";
 
 const Home = () => {
   const theme = useTheme();
   const { dispatch, REDUCER_ACTIONS, cart } = useCart();
-  const { coffees } = useCoffees();
+  const { products } = useProduct();
 
   const introItems = [
     {
@@ -44,7 +44,7 @@ const Home = () => {
                 Encontre o café perfeito para qualquer hora do dia
               </S.IntroTitle>
               <S.IntroSubtitle>
-                Com o Coffee Delivery você recebe seu café onde estiver, a
+                Com o Product Delivery você recebe seu café onde estiver, a
                 qualquer hora
               </S.IntroSubtitle>
             </S.IntroTextContainer>
@@ -83,22 +83,22 @@ const Home = () => {
           </S.IntroRightContent>
         </S.IntroContent>
       </S.IntroContainer>
-      <S.CoffeeListContainer>
-        <S.CoffeeListTitle>Nossos Cafés</S.CoffeeListTitle>
-        <S.CoffeeList>
-          {coffees?.map((coffee) => {
+      <S.ProductListContainer>
+        <S.ProductListTitle>Nossos Cafés</S.ProductListTitle>
+        <S.ProductList>
+          {products?.map((item) => {
             return (
-              <CoffeeCard
-                key={coffee.sku}
-                coffee={coffee}
+              <ProductCard
+                key={item.sku}
+                product={item}
                 dispatch={dispatch}
                 REDUCER_ACTIONS={REDUCER_ACTIONS}
                 cart={cart}
               />
             );
           })}
-        </S.CoffeeList>
-      </S.CoffeeListContainer>
+        </S.ProductList>
+      </S.ProductListContainer>
     </S.HomeContainer>
   );
 };

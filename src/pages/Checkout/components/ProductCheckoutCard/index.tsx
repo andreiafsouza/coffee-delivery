@@ -12,40 +12,40 @@ import { CustomButton } from "../../../../components/CustomButton";
 import { formatNumberToCurrency } from "../../../../utils";
 
 type PropsType = {
-  coffee: CartItemType;
+  product: CartItemType;
   dispatch: React.Dispatch<ReducerAction>;
   REDUCER_ACTIONS: ReducerActionType;
 };
 
-export const CheckoutCoffeeCard = ({
-  coffee,
+export const ProductCheckoutCard = ({
+  product,
   dispatch,
   REDUCER_ACTIONS,
 }: PropsType) => {
   const theme = useTheme();
-  const [coffeeQuantity, setCoffeeQuantity] = useState(coffee.quantity);
+  const [productQuantity, setProductQuantity] = useState(product.quantity);
 
   const img: string = new URL(
-    `../../../../assets/${coffee.sku}.png`,
+    `../../../../assets/${product.sku}.png`,
     import.meta.url
   ).href;
 
   const handleAddQuantity = () => {
-    const newQuantity = coffeeQuantity + 1;
-    setCoffeeQuantity(newQuantity);
+    const newQuantity = productQuantity + 1;
+    setProductQuantity(newQuantity);
     dispatch({
       type: REDUCER_ACTIONS.QUANTITY,
-      payload: { ...coffee, quantity: newQuantity },
+      payload: { ...product, quantity: newQuantity },
     });
   };
 
   const handleSubtractQuantity = () => {
-    if (coffeeQuantity > 1) {
-      const newQuantity = coffeeQuantity - 1;
-      setCoffeeQuantity(newQuantity);
+    if (productQuantity > 1) {
+      const newQuantity = productQuantity - 1;
+      setProductQuantity(newQuantity);
       dispatch({
         type: REDUCER_ACTIONS.QUANTITY,
-        payload: { ...coffee, quantity: newQuantity },
+        payload: { ...product, quantity: newQuantity },
       });
     }
   };
@@ -53,18 +53,18 @@ export const CheckoutCoffeeCard = ({
   const handleRemoveFromCart = () =>
     dispatch({
       type: REDUCER_ACTIONS.REMOVE,
-      payload: coffee,
+      payload: product,
     });
 
   return (
     <S.Container>
-      <S.CoffeInfoContainer>
-        <S.ImageContainer src={img} alt={`a cup of ${coffee.name}`} />
-        <S.CoffeInfo>
-          <S.TextContainer>{coffee.name}</S.TextContainer>
+      <S.ProductInfoContainer>
+        <S.ImageContainer src={img} alt={`a cup of ${product.name}`} />
+        <S.ProductInfo>
+          <S.TextContainer>{product.name}</S.TextContainer>
           <S.ButtonContainer>
             <QuantitySelect
-              quantity={coffee.quantity}
+              quantity={product.quantity}
               onAddQuantity={handleAddQuantity}
               onSubtractQuantity={handleSubtractQuantity}
             />
@@ -75,9 +75,9 @@ export const CheckoutCoffeeCard = ({
               onClick={handleRemoveFromCart}
             />
           </S.ButtonContainer>
-        </S.CoffeInfo>
-      </S.CoffeInfoContainer>
-      <S.PriceTag>{formatNumberToCurrency(coffee.price)}</S.PriceTag>
+        </S.ProductInfo>
+      </S.ProductInfoContainer>
+      <S.PriceTag>{formatNumberToCurrency(product.price)}</S.PriceTag>
     </S.Container>
   );
 };

@@ -5,18 +5,18 @@ import { defaultTheme } from "./styles/themes/default";
 import { BrowserRouter } from "react-router-dom";
 import { Router } from "./components/Router";
 
-import { CoffeeProvider } from "./context/CoffeesProvider";
+import { ProductProvider } from "./context/ProductProvider";
 import { CartProvider } from "./context/CartProvider";
 
 export function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <BrowserRouter>
-        <CoffeeProvider>
+        <ProductProvider>
           <CartProvider>
             <Router />
           </CartProvider>
-        </CoffeeProvider>
+        </ProductProvider>
         <GlobalStyle />
       </BrowserRouter>
     </ThemeProvider>

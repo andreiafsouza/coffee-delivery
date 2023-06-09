@@ -108,13 +108,13 @@ export const IntroRightContent = styled.div`
   }
 `;
 
-export const CoffeeListContainer = styled.div`
+export const ProductListContainer = styled.div`
   max-width: 74rem;
   margin-inline: auto;
   margin-bottom: 9.8125rem;
 `;
 
-export const CoffeeList = styled.div`
+export const ProductList = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.25rem 2rem;
@@ -130,7 +130,7 @@ export const CoffeeList = styled.div`
   }
 `;
 
-export const CoffeeListTitle = styled.h2`
+export const ProductListTitle = styled.h2`
   font-family: ${(props) => props.theme.font.display};
   color: ${(props) => props.theme.base.subtitle};
   font-size: ${(props) => props.theme.fontSize[32]};
