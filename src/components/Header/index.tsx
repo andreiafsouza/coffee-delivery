@@ -1,22 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { Logo } from "../Logo";
 import * as S from "./styles";
 import { MapPin, ShoppingCart } from "phosphor-react";
 import { useTheme } from "styled-components";
 import { NavLink } from "react-router-dom";
 import { Badge } from "../Badge";
+import { useGeoLocation } from "../../hooks/useGeoLocation";
 
 export const Header = () => {
   const theme = useTheme();
+  const { geoLocation, getGeoLocation } = useGeoLocation();
+  const [address, setAddess] = useState("Sua Localização");
   const [navPadding, setNavpadding] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(false);
+
+  const handleOpenLocationMenu = () => {
+    setOpenDropdown(true);
+  };
+
+  const handleCloseLocationMenu = () => {
+    setOpenDropdown(false);
+  };
+
+  const handleGetGeoLocation = async () => {
+    getGeoLocation();
+  };
+
+  useEffect(() => {
+    if (geoLocation) {
+      setAddess(`${geoLocation?.city}, ${geoLocation?.state}`);
+    }
+  }, [geoLocation]);
 
   useEffect(() => {
     function handleScroll() {
-      if (window.scrollY > 1) {
-        setNavpadding(true);
-      } else {
-        setNavpadding(false);
-      }
+      window.scrollY > 1 ? setNavpadding(true) : setNavpadding(false);
     }
 
     window.addEventListener("scroll", handleScroll);
@@ -32,10 +50,25 @@ export const Header = () => {
           <Logo />
         </NavLink>
         <S.ActionsContainer>
-          <S.LocationTag>
+          <S.LocationTag
+            title={geoLocation ? address : "Sua Localização"}
+            onMouseEnter={handleOpenLocationMenu}
+            onMouseLeave={handleCloseLocationMenu}
+          >
             <MapPin size={22} weight="fill" color={theme.brand.purple} />
-            Porto Alegre, RS
+            {address}
           </S.LocationTag>
+          <S.DropdownLocation
+            title=""
+            aria-expanded={openDropdown}
+            onMouseEnter={handleOpenLocationMenu}
+            onMouseLeave={handleCloseLocationMenu}
+          >
+            <S.GeoLocationButton onClick={handleGetGeoLocation}>
+              <MapPin size={22} weight="fill" color={theme.brand.purple} />
+              Utilizar minha localização
+            </S.GeoLocationButton>
+          </S.DropdownLocation>
           <NavLink to="/checkout" title="Checkout">
             <S.ShoppingCartLink>
               <Badge />

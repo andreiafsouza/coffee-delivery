@@ -24,19 +24,22 @@ export const HeaderContainer = styled.header<HeaderContainerProps>`
 `;
 
 export const ActionsContainer = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0.75rem;
 `;
 
-export const LocationTag = styled.div`
+export const LocationTag = styled.button`
   display: flex;
   align-items: center;
   padding: 0.5rem;
   gap: 0.25rem;
+  border: none;
   color: ${(props) => props.theme.brand.purpleDark};
   background: ${(props) => props.theme.brand.purpleLight};
   border-radius: 6px;
+  cursor: pointer;
 `;
 
 export const ShoppingCartLink = styled.div`
@@ -55,6 +58,69 @@ export const ShoppingCartLink = styled.div`
       transition: all 0.1s ease-in-out;
       svg {
         fill: ${(props) => props.theme.brand.yellow};
+      }
+    }
+  }
+`;
+
+export const DropdownLocation = styled.div`
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  position: absolute;
+  top: 3rem;
+  right: 3rem;
+  background: ${(props) => props.theme.base.button};
+  opacity: 0;
+  visibility: hidden;
+  transition: 250ms ease;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  border-radius: 0.25rem;
+  min-width: fit-content;
+
+  &[aria-expanded="true"] {
+    opacity: 1;
+    visibility: visible;
+    transition: 250ms ease;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -0.4rem;
+    right: 2.35rem;
+    width: 1rem;
+    height: 1rem;
+    transform: rotate(45deg);
+    background: ${(props) => props.theme.base.button};
+    border-radius: 2px;
+    transition: 250ms ease;
+  }
+`;
+
+export const GeoLocationButton = styled.button`
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  white-space: nowrap;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 0.5rem;
+  color: ${(props) => props.theme.base.title};
+
+  svg {
+    max-width: 24px;
+    min-width: 24px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transition: all 0.1s ease-in-out;
+      background-color: ${(props) => props.theme.base.hover};
+      svg {
+        fill: ${(props) => props.theme.brand.purpleDark};
       }
     }
   }

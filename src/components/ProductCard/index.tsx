@@ -7,7 +7,7 @@ import {
   ReducerAction,
   ReducerActionType,
 } from "../../context/CartProvider";
-import { ReactElement, useState } from "react";
+import { ReactElement, useState, memo } from "react";
 import { CheckMark } from "../CheckMark";
 import { InCartModalMessage } from "../InCartModalMessage";
 import { QuantitySelect } from "../QuantitySelect";
@@ -36,7 +36,7 @@ const ProductCard = ({
   const inCart: boolean = cart.some((item) => item.sku === product.sku);
 
   const img: string = new URL(
-    `../../../../assets/${product.sku}.png`,
+    `../../assets/${product.sku}.png`,
     import.meta.url
   ).href;
 
@@ -50,7 +50,7 @@ const ProductCard = ({
   };
 
   const handleAddToCart = () => {
-    // Check if the item already exists in the cart
+    // Check if the product already exists in the cart
     if (!inCart) {
       dispatch({
         type: REDUCER_ACTIONS.ADD,
@@ -130,4 +130,20 @@ const ProductCard = ({
   );
 };
 
-export default ProductCard;
+function areProductsEqual(
+  { product: prevItem }: PropsType,
+  { product: nextItem }: PropsType
+) {
+  return Object.keys(prevItem).every((key) => {
+    return (
+      prevItem[key as keyof ProductType] === nextItem[key as keyof ProductType]
+    );
+  });
+}
+
+const MemoizedProductCard = memo<typeof ProductCard>(
+  ProductCard,
+  areProductsEqual
+);
+
+export default MemoizedProductCard;

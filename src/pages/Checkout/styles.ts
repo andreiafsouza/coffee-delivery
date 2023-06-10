@@ -88,7 +88,7 @@ export const ButtonContainer = styled.div`
   }
 `;
 
-export const SelectedCoffeContainer = styled.div`
+export const SelectedProductContainer = styled.div`
   padding: 2.5rem;
   border-radius: 6px 36px 6px 36px;
   background: ${(props) => props.theme.base.card};

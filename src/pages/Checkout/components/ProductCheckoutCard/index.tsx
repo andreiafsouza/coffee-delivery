@@ -3,7 +3,7 @@ import {
   ReducerAction,
   ReducerActionType,
 } from "../../../../context/CartProvider";
-import { useState } from "react";
+import { useState, memo } from "react";
 import * as S from "./styles";
 import { QuantitySelect } from "../../../../components/QuantitySelect";
 import { Trash } from "phosphor-react";
@@ -17,7 +17,7 @@ type PropsType = {
   REDUCER_ACTIONS: ReducerActionType;
 };
 
-export const ProductCheckoutCard = ({
+const ProductCheckoutCard = ({
   product,
   dispatch,
   REDUCER_ACTIONS,
@@ -81,3 +81,22 @@ export const ProductCheckoutCard = ({
     </S.Container>
   );
 };
+
+function areProductsEqual(
+  { product: prevItem }: PropsType,
+  { product: nextItem }: PropsType
+) {
+  return Object.keys(prevItem).every((key) => {
+    return (
+      prevItem[key as keyof CartItemType] ===
+      nextItem[key as keyof CartItemType]
+    );
+  });
+}
+
+const MemoizedProductCheckoutCard = memo<typeof ProductCheckoutCard>(
+  ProductCheckoutCard,
+  areProductsEqual
+);
+
+export default MemoizedProductCheckoutCard;

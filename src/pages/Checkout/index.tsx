@@ -9,9 +9,9 @@ import {
 } from "phosphor-react";
 import { useTheme } from "styled-components";
 import { AddressForm } from "./components/AddressForm";
-import { ProductCheckoutCard } from "./components/ProductCheckoutCard";
+import ProductCheckoutCard from "./components/ProductCheckoutCard";
 import { NavLink } from "react-router-dom";
-
+import { formatNumberToCurrency } from "../../utils";
 import useCart from "../../hooks/useCart";
 import { CustomButton } from "../../components/CustomButton";
 
@@ -81,7 +81,7 @@ const Checkout = () => {
 
       <S.CardContainer>
         <S.CheckoutTitle>Cafés selecionados</S.CheckoutTitle>
-        <S.SelectedCoffeContainer>
+        <S.SelectedProductContainer>
           <S.ProductListContainer scrollY={scrollY}>
             {cart.length > 0 ? (
               cart.map((item) => {
@@ -107,10 +107,7 @@ const Checkout = () => {
             </S.ItemsContainer>
             <S.ItemsContainer>
               <span>Total de itens</span>
-              {new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(totalPrice)}
+              {formatNumberToCurrency(totalPrice)}
             </S.ItemsContainer>
             <S.ShippingContainer>
               <span>Entrega</span>
@@ -121,10 +118,7 @@ const Checkout = () => {
             </S.ShippingContainer>
             <S.TotalPriceContainer>
               <span>Total</span>
-              {new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(deliveryValue + totalPrice)}
+              {formatNumberToCurrency(deliveryValue + totalPrice)}
             </S.TotalPriceContainer>
           </S.TotalValuesContainer>
           <NavLink
@@ -135,7 +129,7 @@ const Checkout = () => {
           >
             <S.ConfirmButton>Confirmar pedido</S.ConfirmButton>
           </NavLink>
-        </S.SelectedCoffeContainer>
+        </S.SelectedProductContainer>
       </S.CardContainer>
     </S.Container>
   );

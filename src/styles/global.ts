@@ -49,6 +49,11 @@ export const GlobalStyle = createGlobalStyle`
     overflow-y: scroll;
   }
 
+  button {
+    font-family: ${(props) => props.theme.font.main};
+    font-size: ${(props) => props.theme.fontSize[16]};
+  }
+
   img,
   picture,
   svg {
