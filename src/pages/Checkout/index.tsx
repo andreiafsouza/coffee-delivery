@@ -46,9 +46,7 @@ const Checkout = () => {
                 </S.Subtitle>
               </S.TextContainer>
             </S.TitleContainer>
-            <form>
-              <AddressForm />
-            </form>
+            <AddressForm />
           </S.AddressCard>
         </S.CheckoutContainer>
 
