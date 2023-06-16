@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as S from "./styles";
 import { useTheme } from "styled-components";
 import { useGeoLocation } from "../../../../hooks/useGeoLocation";
+import InputAutofill from "../../../../components/InputAutofill";
 
 const createAddressFormSchema = z.object({
   cep: z
@@ -43,6 +44,7 @@ export const AddressForm = () => {
   return (
     <form onSubmit={handleSubmit(createUser)}>
       <S.AddressFormContainer>
+        <InputAutofill />
         <S.ItemContainerCep>
           <div style={{ position: "relative", paddingBlock: "1rem" }}>
             <label
