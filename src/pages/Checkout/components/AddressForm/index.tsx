@@ -47,13 +47,13 @@ export const AddressForm = () => {
         <InputAutofill />
         <S.ItemContainerCep>
           <div style={{ position: "relative", paddingBlock: "1rem" }}>
-            <label
+            <S.InputLabel
               htmlFor="cep"
               hidden={!watchedValues.cep}
               style={{ position: "absolute", top: "-0.4rem" }}
             >
               CEP
-            </label>
+            </S.InputLabel>
             <S.InputItem placeholder="CEP" {...register("cep")} type="text" />
             {errors.cep && (
               <span
@@ -73,20 +73,20 @@ export const AddressForm = () => {
         </S.ItemContainerCep>
 
         <S.ItemContainerStreet>
-          <label htmlFor="street" hidden={!watchedValues.street}>
+          <S.InputLabel htmlFor="street" hidden={!watchedValues.street}>
             Rua
-          </label>
+          </S.InputLabel>
           <S.InputItem placeholder="Rua" {...register("street")} />
         </S.ItemContainerStreet>
 
         <S.ItemContainerComplement>
-          <label htmlFor="number" hidden={!watchedValues.number}>
+          <S.InputLabel htmlFor="number" hidden={!watchedValues.number}>
             Número
-          </label>
+          </S.InputLabel>
           <S.InputItem placeholder="Número" {...register("number")} />
-          <label htmlFor="complement" hidden={!watchedValues.complement}>
+          <S.InputLabel htmlFor="complement" hidden={!watchedValues.complement}>
             Complemento (Apto, Quarto, etc)
-          </label>
+          </S.InputLabel>
           <S.InputItem
             placeholder=" Complemento (Apto, Quarto, etc)"
             {...register("complement")}
@@ -94,17 +94,20 @@ export const AddressForm = () => {
         </S.ItemContainerComplement>
 
         <S.ItemContainerCity>
-          <label htmlFor="neighborhood" hidden={!watchedValues.neighborhood}>
+          <S.InputLabel
+            htmlFor="neighborhood"
+            hidden={!watchedValues.neighborhood}
+          >
             Bairro
-          </label>
+          </S.InputLabel>
           <S.InputItem placeholder="Bairro" {...register("neighborhood")} />
-          <label htmlFor="city" hidden={!watchedValues.city}>
+          <S.InputLabel htmlFor="city" hidden={!watchedValues.city}>
             Cidade
-          </label>
+          </S.InputLabel>
           <S.InputItem placeholder="Cidade" {...register("city")} />
-          <label htmlFor="state" hidden={!watchedValues.state}>
+          <S.InputLabel htmlFor="state" hidden={!watchedValues.state}>
             Estado
-          </label>
+          </S.InputLabel>
           <S.InputItem placeholder="UF" {...register("state")} />
         </S.ItemContainerCity>
       </S.AddressFormContainer>

@@ -36,6 +36,8 @@ export const ItemContainerCity = styled(ItemContainerBase)`
   }
 `;
 
+export const InputLabel = styled.label``;
+
 const InputBase = styled.input`
   color: ${(props) => props.theme.base.text};
   font-size: ${(props) => props.theme.fontSize[14]};

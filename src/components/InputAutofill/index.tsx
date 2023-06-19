@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
+import * as S from "./styles";
 
-type PlacesServiceStatus =
+export type PlacesServiceStatus =
   | "INVALID_REQUEST"
   | "NOT_FOUND"
   | "OK"
@@ -152,50 +153,34 @@ function InputAutofill() {
   };
 
   return (
-    <>
-      <input
+    <S.InputContainer>
+      <S.InputItem
         id="location-input"
-        style={{
-          fontSize: "1.25rem",
-          width: "100%",
-          maxWidth: "100%",
-          padding: "0.5rem",
-        }}
-        placeholder="Enter an address or a place name"
+        placeholder="Rua"
         onChange={handleChange}
         value={value}
       />
 
       {suggestions.length > 0 && (
-        <div>
-          <h2 style={{ fontSize: "1.5rem", textAlign: "left" }}>
-            Suggestions:
-          </h2>
-          <ul style={{ listStyleType: "none", padding: "0" }} role="listbox">
+        <S.SuggestionsContainer>
+          <S.SuggestionList role="listbox">
             {suggestions.map((suggestion) => (
-              <li
+              <S.SuggestionItem
                 key={suggestion.place_id}
-                style={{
-                  fontSize: "1rem",
-                  padding: "0.25rem 0.5rem",
-                  margin: "0.25rem 0",
-                  backgroundColor: "rgba(255, 255, 255, 0.15)",
-                  cursor: "pointer",
-                }}
                 tabIndex={-1}
                 role="option"
                 aria-selected="false"
                 onClick={() => handleSuggestionSelected(suggestion)}
               >
                 {suggestion.description}
-              </li>
+              </S.SuggestionItem>
             ))}
-          </ul>
-        </div>
+          </S.SuggestionList>
+        </S.SuggestionsContainer>
       )}
 
       <div id="googlemaps-attribution-container"></div>
-    </>
+    </S.InputContainer>
   );
 }
 
