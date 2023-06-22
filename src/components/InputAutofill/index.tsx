@@ -1,6 +1,5 @@
-import React, { useRef, useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
-import * as S from "./styles";
 
 export type PlacesServiceStatus =
   | "INVALID_REQUEST"
@@ -17,12 +16,12 @@ export type Prediction = {
 };
 
 export type PlaceDetail = {
-  // fields here depend on the fields param passed to getDetails
   formatted_address?: string;
+  address_components: object[];
   geometry?: {
     location: { lat: () => number; lng: () => number };
   };
-  name?: string;
+  name: string;
   place_id?: string;
 };
 
@@ -33,7 +32,13 @@ type GoogleApiClient = {
       AutocompleteService: {
         new (): {
           getPlacePredictions: (
-            params: { input: string; sessionToken: string | undefined },
+            params: {
+              input: string;
+              sessionToken: string | undefined;
+              componentRestrictions?: object;
+              types: string[];
+              limit: number;
+            },
             callback: (
               predictions: Prediction[],
               status: PlacesServiceStatus
@@ -61,22 +66,17 @@ type GoogleApiClient = {
   };
 };
 
-let googleApiClient: GoogleApiClient | undefined;
-
 async function getGoogleMapsApiClient(): Promise<GoogleApiClient> {
-  if (googleApiClient) {
-    return googleApiClient;
-  }
   const loader = new Loader({
     apiKey: import.meta.env.VITE_REACT_APP_MAPS_API_KEY || "",
     version: "weekly",
     libraries: ["places"],
   });
-  googleApiClient = (await loader.load()) as unknown as GoogleApiClient;
+  const googleApiClient = (await loader.load()) as unknown as GoogleApiClient;
   return googleApiClient;
 }
 
-function InputAutofill() {
+function useInputAutofill() {
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState<Prediction[]>([]);
   const [placeDetail, setPlaceDetail] = useState<PlaceDetail>();
@@ -84,6 +84,13 @@ function InputAutofill() {
   const sessionTokenRef = useRef<string | undefined>();
 
   const timeoutRef = useRef<number | undefined>();
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setValue(newValue);
@@ -109,9 +116,11 @@ function InputAutofill() {
         {
           input: newValue,
           sessionToken: sessionTokenRef.current,
+          componentRestrictions: { country: "BR" },
+          types: ["address"],
+          limit: 2,
         },
         (predictions: Prediction[], status: PlacesServiceStatus) => {
-          console.log(predictions, status);
           if (status === "ZERO_RESULTS") {
             setSuggestions([]);
             return;
@@ -127,7 +136,6 @@ function InputAutofill() {
   };
 
   const handleSuggestionSelected = async (suggestion: Prediction) => {
-    setValue(suggestion.description);
     setSuggestions([]);
 
     const google = await getGoogleMapsApiClient();
@@ -140,48 +148,32 @@ function InputAutofill() {
     ).getDetails(
       {
         placeId: suggestion.place_id,
-        fields: ["formatted_address", "name", "place_id", "geometry.location"],
+        fields: [
+          "formatted_address",
+          "name",
+          "place_id",
+          "geometry.location",
+          "address_components",
+          "utc_offset_minutes",
+        ],
         sessionToken,
       },
       (place: PlaceDetail, status: PlacesServiceStatus) => {
         if (status === "OK") {
           setPlaceDetail(place);
-          console.log(place);
         }
       }
     );
   };
 
-  return (
-    <S.InputContainer>
-      <S.InputItem
-        id="location-input"
-        placeholder="Rua"
-        onChange={handleChange}
-        value={value}
-      />
-
-      {suggestions.length > 0 && (
-        <S.SuggestionsContainer>
-          <S.SuggestionList role="listbox">
-            {suggestions.map((suggestion) => (
-              <S.SuggestionItem
-                key={suggestion.place_id}
-                tabIndex={-1}
-                role="option"
-                aria-selected="false"
-                onClick={() => handleSuggestionSelected(suggestion)}
-              >
-                {suggestion.description}
-              </S.SuggestionItem>
-            ))}
-          </S.SuggestionList>
-        </S.SuggestionsContainer>
-      )}
-
-      <div id="googlemaps-attribution-container"></div>
-    </S.InputContainer>
-  );
+  return {
+    value,
+    suggestions,
+    placeDetail,
+    handleChange,
+    handleSuggestionSelected,
+    setSuggestions,
+  };
 }
 
-export default InputAutofill;
+export default useInputAutofill;
