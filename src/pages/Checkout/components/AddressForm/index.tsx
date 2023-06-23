@@ -80,7 +80,7 @@ export const AddressForm = () => {
         }
       });
     }
-  }, [placeDetail, setValue]);
+  }, [placeDetail]);
 
   return (
     <form onSubmit={handleSubmit(createAddress)}>
@@ -102,7 +102,9 @@ export const AddressForm = () => {
                     tabIndex={-1}
                     role="option"
                     aria-selected="false"
-                    onClick={() => handleSuggestionSelected(suggestion)}
+                    onClick={() =>
+                      handleSuggestionSelected(suggestion, "street")
+                    }
                   >
                     {suggestion.description}
                   </S.SuggestionItem>

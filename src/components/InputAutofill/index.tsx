@@ -66,6 +66,11 @@ type GoogleApiClient = {
   };
 };
 
+interface AddressComponent {
+  long_name: string;
+  types: string[];
+}
+
 async function getGoogleMapsApiClient(): Promise<GoogleApiClient> {
   const loader = new Loader({
     apiKey: import.meta.env.VITE_REACT_APP_MAPS_API_KEY || "",
@@ -135,7 +140,10 @@ function useInputAutofill() {
     }, 350);
   };
 
-  const handleSuggestionSelected = async (suggestion: Prediction) => {
+  const handleSuggestionSelected = async (
+    suggestion: Prediction,
+    inputFor: string
+  ) => {
     setSuggestions([]);
 
     const google = await getGoogleMapsApiClient();
@@ -161,6 +169,13 @@ function useInputAutofill() {
       (place: PlaceDetail, status: PlacesServiceStatus) => {
         if (status === "OK") {
           setPlaceDetail(place);
+          /* const addressComponents =
+            place.address_components as AddressComponent[];
+          addressComponents.forEach((obj) => {
+            if (obj.types.includes(inputFor)) {
+              setValue(addressComponents[0].long_name);
+            }
+          }); */
         }
       }
     );
