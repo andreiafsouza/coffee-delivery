@@ -65,7 +65,11 @@ const InputBase = styled.input`
   }
 `;
 
-export const InputItem = styled(InputBase)``;
+export const InputItem = styled(InputBase)`
+  &.red-border {
+    border: 1px solid ${(props) => props.theme.base.error};
+  }
+`;
 
 export const ErrorText = styled.span`
   color: ${(props) => props.theme.base.error};

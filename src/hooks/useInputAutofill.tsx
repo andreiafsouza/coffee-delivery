@@ -13,7 +13,7 @@ function useInputAutofill() {
 
   const sessionTokenRef = useRef<string | undefined>();
 
-  const timeoutRef = useRef<number | undefined>();
+  const timeoutRef = useRef<NodeJS.Timeout | undefined>();
 
   useEffect(() => {
     return () => {

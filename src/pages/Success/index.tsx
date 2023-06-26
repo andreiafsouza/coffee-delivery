@@ -1,5 +1,6 @@
+import { useEffect, useState } from "react";
 import * as S from "./styles";
-
+import { CreateAddressFormData } from "../Checkout/components/AddressForm";
 import { MapPin, CurrencyDollar, Timer } from "phosphor-react";
 import { useTheme } from "styled-components";
 
@@ -11,6 +12,25 @@ interface Props {
 
 const Success = ({ color }: Props) => {
   const theme = useTheme();
+  const deliveryAddress = window.localStorage.getItem(
+    "@coffee-delivery-address"
+  );
+  const [address, setAddress] = useState<CreateAddressFormData>({
+    cep: "",
+    street: "",
+    number: "",
+    complement: "",
+    neighborhood: "",
+    city: "",
+    state: "",
+  });
+
+  useEffect(() => {
+    if (deliveryAddress) {
+      setAddress(JSON.parse(deliveryAddress));
+    }
+  }, [deliveryAddress]);
+
   return (
     <S.Container>
       <S.SuccessContent>
@@ -29,9 +49,10 @@ const Success = ({ color }: Props) => {
                 </S.IconContainer>
                 <S.TextContainer>
                   <S.TextInfo>
-                    Entrega em <span>Rua João Daniel Martinelli, 102</span>
+                    Entrega em{" "}
+                    <span>{`${address.street}, ${address.number}`}</span>
                   </S.TextInfo>
-                  <S.TextInfo>Farrapos - Porto Alegre, RS</S.TextInfo>
+                  <S.TextInfo>{`${address.neighborhood} - ${address.city}, ${address.state}`}</S.TextInfo>
                 </S.TextContainer>
               </S.TextInfoContainer>
               <S.TextInfoContainer>

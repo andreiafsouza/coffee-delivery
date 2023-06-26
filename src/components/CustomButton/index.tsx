@@ -3,6 +3,7 @@ import * as S from "./styles";
 import { useTheme } from "styled-components";
 
 interface Props {
+  type?: "button" | "submit" | "reset" | undefined;
   icon?: ReactNode;
   title: string;
   color?: string;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export const CustomButton = ({
+  type,
   icon,
   title,
   size,
@@ -22,6 +24,7 @@ export const CustomButton = ({
   const theme = useTheme();
   return (
     <S.Container
+      type={type ? type : "button"}
       size={size || "default"}
       background={background}
       onClick={onClick}
