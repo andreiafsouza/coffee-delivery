@@ -1,85 +1,10 @@
 import { useState, useRef, useEffect } from "react";
-import { Loader } from "@googlemaps/js-api-loader";
-
-export type PlacesServiceStatus =
-  | "INVALID_REQUEST"
-  | "NOT_FOUND"
-  | "OK"
-  | "OVER_QUERY_LIMIT"
-  | "REQUEST_DENIED"
-  | "UNKNOWN_ERROR"
-  | "ZERO_RESULTS";
-
-export type Prediction = {
-  description: string;
-  place_id: string;
-};
-
-export type PlaceDetail = {
-  formatted_address?: string;
-  address_components: object[];
-  geometry?: {
-    location: { lat: () => number; lng: () => number };
-  };
-  name: string;
-  place_id?: string;
-};
-
-type GoogleApiClient = {
-  maps: {
-    places: {
-      AutocompleteSessionToken: { new (): string };
-      AutocompleteService: {
-        new (): {
-          getPlacePredictions: (
-            params: {
-              input: string;
-              sessionToken: string | undefined;
-              componentRestrictions?: object;
-              types: string[];
-              limit: number;
-            },
-            callback: (
-              predictions: Prediction[],
-              status: PlacesServiceStatus
-            ) => void
-          ) => void;
-        };
-      };
-      PlacesService: {
-        new (attributionNode: HTMLElement): {
-          getDetails: (
-            params: {
-              placeId: string;
-              fields?: string[];
-              sessionToken: string | undefined;
-            },
-            callback: (place: PlaceDetail, status: PlacesServiceStatus) => void
-          ) => void;
-        };
-      };
-      PlacesServiceStatus: {
-        [key in PlacesServiceStatus]: PlacesServiceStatus;
-      };
-    };
-    [key: string]: any;
-  };
-};
-
-interface AddressComponent {
-  long_name: string;
-  types: string[];
-}
-
-async function getGoogleMapsApiClient(): Promise<GoogleApiClient> {
-  const loader = new Loader({
-    apiKey: import.meta.env.VITE_REACT_APP_MAPS_API_KEY || "",
-    version: "weekly",
-    libraries: ["places"],
-  });
-  const googleApiClient = (await loader.load()) as unknown as GoogleApiClient;
-  return googleApiClient;
-}
+import {
+  getGoogleMapsApiClient,
+  PlacesServiceStatus,
+  Prediction,
+  PlaceDetail,
+} from "../lib/googleApiClient";
 
 function useInputAutofill() {
   const [value, setValue] = useState("");
@@ -140,10 +65,7 @@ function useInputAutofill() {
     }, 350);
   };
 
-  const handleSuggestionSelected = async (
-    suggestion: Prediction,
-    inputFor: string
-  ) => {
+  const handleSuggestionSelected = async (suggestion: Prediction) => {
     setSuggestions([]);
 
     const google = await getGoogleMapsApiClient();
@@ -162,20 +84,38 @@ function useInputAutofill() {
           "place_id",
           "geometry.location",
           "address_components",
-          "utc_offset_minutes",
         ],
         sessionToken,
       },
       (place: PlaceDetail, status: PlacesServiceStatus) => {
         if (status === "OK") {
-          setPlaceDetail(place);
-          /* const addressComponents =
-            place.address_components as AddressComponent[];
-          addressComponents.forEach((obj) => {
-            if (obj.types.includes(inputFor)) {
-              setValue(addressComponents[0].long_name);
-            }
-          }); */
+          setPlaceDetail({
+            ...place,
+            street:
+              place.address_components.find((obj: any) =>
+                obj.types.includes("route")
+              )?.long_name || "",
+            number:
+              place.address_components.find((obj: any) =>
+                obj.types.includes("street_number")
+              )?.long_name || "",
+            neighborhood:
+              place.address_components.find((obj: any) =>
+                obj.types.includes("sublocality_level_1")
+              )?.long_name || "",
+            city:
+              place.address_components.find((obj: any) =>
+                obj.types.includes("administrative_area_level_2")
+              )?.long_name || "",
+            state:
+              place.address_components.find((obj: any) =>
+                obj.types.includes("administrative_area_level_1")
+              )?.short_name || "",
+            cep:
+              place.address_components.find((obj: any) =>
+                obj.types.includes("postal_code")
+              )?.long_name || "",
+          });
         }
       }
     );

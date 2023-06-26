@@ -14,13 +14,27 @@ export type Prediction = {
   place_id: string;
 };
 
+export type AddressComponent = {
+  long_name: string;
+  short_name: string;
+  types: string[];
+};
+
+export type Geometry = {
+  location: { lat: () => number; lng: () => number };
+};
+
 export type PlaceDetail = {
-  // fields here depend on the fields param passed to getDetails
   formatted_address?: string;
-  geometry?: {
-    location: { lat: () => number; lng: () => number };
-  };
-  name?: string;
+  street: string;
+  number: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  cep: string;
+  address_components: AddressComponent[];
+  geometry?: Geometry;
+  name: string;
   place_id?: string;
 };
 
@@ -31,7 +45,13 @@ type GoogleApiClient = {
       AutocompleteService: {
         new (): {
           getPlacePredictions: (
-            params: { input: string; sessionToken: string | undefined },
+            params: {
+              input: string;
+              sessionToken: string | undefined;
+              componentRestrictions?: object;
+              types: string[];
+              limit: number;
+            },
             callback: (
               predictions: Prediction[],
               status: PlacesServiceStatus
@@ -59,17 +79,14 @@ type GoogleApiClient = {
   };
 };
 
-let googleApiClient: GoogleApiClient | undefined;
-
 async function getGoogleMapsApiClient(): Promise<GoogleApiClient> {
-  if (googleApiClient) {
-    return googleApiClient;
-  }
   const loader = new Loader({
     apiKey: import.meta.env.VITE_REACT_APP_MAPS_API_KEY || "",
-    version: "3.50",
+    version: "weekly",
     libraries: ["places"],
   });
-  googleApiClient = (await loader.load()) as unknown as GoogleApiClient;
+  const googleApiClient = (await loader.load()) as unknown as GoogleApiClient;
   return googleApiClient;
 }
+
+export { getGoogleMapsApiClient };

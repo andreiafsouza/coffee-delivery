@@ -1,12 +1,14 @@
-import { useEffect } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 /* styles */
 import * as S from "./styles";
 import { useTheme } from "styled-components";
 import { useGeoLocation } from "../../../../hooks/useGeoLocation";
-import useInputAutofill from "../../../../components/InputAutofill";
+import useInputAutofill from "../../../../hooks/useInputAutofill";
+import { CustomButton } from "../../../../components/CustomButton";
+import { MapPinLine } from "phosphor-react";
 
 const createAddressFormSchema = z.object({
   cep: z
@@ -24,16 +26,16 @@ const createAddressFormSchema = z.object({
 
 type CreateAddressFormData = z.infer<typeof createAddressFormSchema>;
 
-interface AddressComponent {
-  long_name: string;
-  short_name: string;
-  types: string[];
-}
-
 export const AddressForm = () => {
   const { geoLocation, getGeoLocation } = useGeoLocation();
-  const { suggestions, placeDetail, handleChange, handleSuggestionSelected } =
-    useInputAutofill();
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const {
+    value,
+    suggestions,
+    placeDetail,
+    handleChange,
+    handleSuggestionSelected,
+  } = useInputAutofill();
   const theme = useTheme();
   const {
     register,
@@ -41,6 +43,7 @@ export const AddressForm = () => {
     formState: { errors },
     watch,
     setValue,
+    clearErrors,
   } = useForm<CreateAddressFormData>({
     resolver: zodResolver(createAddressFormSchema),
   });
@@ -52,48 +55,67 @@ export const AddressForm = () => {
   }
 
   useEffect(() => {
-    const addressComponents =
-      placeDetail?.address_components as AddressComponent[];
-    if (addressComponents) {
-      addressComponents.forEach((obj) => {
-        switch (true) {
-          case obj.types.includes("route"):
-            setValue("street", obj.long_name);
-            break;
-          case obj.types.includes("sublocality_level_1"):
-            setValue("neighborhood", obj.long_name);
-            break;
-          case obj.types.includes("administrative_area_level_2"):
-            setValue("city", obj.long_name);
-            break;
-          case obj.types.includes("administrative_area_level_1"):
-            setValue("state", obj.short_name);
-            break;
-          case obj.types.includes("postal_code"):
-            setValue("cep", obj.long_name);
-            break;
-          case obj.types.includes("street_number"):
-            setValue("number", obj.long_name);
-            break;
-          default:
-            break;
-        }
-      });
+    if (placeDetail) {
+      clearErrors();
+      setValue("street", placeDetail.street);
+      setValue("neighborhood", placeDetail.neighborhood);
+      setValue("city", placeDetail.city);
+      setValue("state", placeDetail.state);
+      setValue("cep", placeDetail.cep);
+      setValue("number", placeDetail.number);
+    }
+
+    const complementInput = document.getElementById(
+      "complement"
+    ) as HTMLInputElement;
+    if (complementInput) {
+      complementInput.focus();
     }
   }, [placeDetail]);
+
+  useEffect(() => {
+    if (geoLocation) {
+      clearErrors();
+      setValue("street", geoLocation.street);
+      setValue("neighborhood", geoLocation.neighborhood);
+      setValue("city", geoLocation.city);
+      setValue("state", geoLocation.state);
+      setValue("cep", geoLocation.postalCode);
+      setValue("number", geoLocation.number);
+    }
+
+    const complementInput = document.getElementById(
+      "complement"
+    ) as HTMLInputElement;
+    if (complementInput) {
+      complementInput.focus();
+    }
+  }, [geoLocation]);
+
+  useEffect(() => {
+    setValue("street", value);
+  }, [value, setValue]);
 
   return (
     <form onSubmit={handleSubmit(createAddress)}>
       <S.AddressFormContainer>
+        <S.ButtonContainer>
+          <CustomButton
+            icon={<MapPinLine size={16} color={theme.brand.purple} />}
+            title={"Usar sua localização Atual"}
+            onClick={getGeoLocation}
+          />
+        </S.ButtonContainer>
         <S.InputContainer>
           <S.InputLabel htmlFor="street">Rua</S.InputLabel>
           <S.InputItem
             id="street"
             {...register("street")}
             onChange={handleChange}
-            onBlur={() => {}}
+            onBlur={() => setTimeout(() => setShowSuggestions(false), 300)}
+            onFocus={() => setShowSuggestions(true)}
           />
-          {suggestions.length > 0 && (
+          {showSuggestions && suggestions.length > 0 && (
             <S.SuggestionsContainer>
               <S.SuggestionList role="listbox">
                 {suggestions.map((suggestion) => (
@@ -102,9 +124,7 @@ export const AddressForm = () => {
                     tabIndex={-1}
                     role="option"
                     aria-selected="false"
-                    onClick={() =>
-                      handleSuggestionSelected(suggestion, "street")
-                    }
+                    onClick={() => handleSuggestionSelected(suggestion)}
                   >
                     {suggestion.description}
                   </S.SuggestionItem>
@@ -163,8 +183,7 @@ export const AddressForm = () => {
           {errors.cep && <S.ErrorText>{errors.cep.message}</S.ErrorText>}
         </S.InputContainer>
 
-        {/*  <S.RequiredFieldsInfo>* = campos obrigatórios</S.RequiredFieldsInfo> */}
-        <button type="submit">ENVIAR</button>
+        <CustomButton title={"Salvar endereço"} onClick={() => {}} />
       </S.AddressFormContainer>
     </form>
   );

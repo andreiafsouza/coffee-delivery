@@ -8,17 +8,11 @@ export const AddressFormContainer = styled.div`
 const ItemContainerBase = styled.div`
   position: relative;
   padding-block: 1rem;
-  /* display: grid;
-  gap: 0.75rem;
-
-  input {
-    width: 100%;
-  } */
 `;
 
 export const InputContainer = styled(ItemContainerBase)`
   position: relative;
-  padding-block: 0.5rem;
+  padding-block: 0.4rem;
 `;
 
 export const InputContainerRow = styled.div`
@@ -33,11 +27,15 @@ export const InputContainerRow = styled.div`
   & > :last-child {
     flex: 1;
   }
+
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+    flex-direction: column;
+  }
 `;
 
 export const InputLabel = styled.label`
   position: absolute;
-  top: -0.6rem;
+  top: -0.8rem;
   left: 0.2em;
   font-size: ${(props) => props.theme.fontSize[14]};
 `;
@@ -72,38 +70,14 @@ export const InputItem = styled(InputBase)``;
 export const ErrorText = styled.span`
   color: ${(props) => props.theme.base.error};
   font-size: ${(props) => props.theme.fontSize[12]};
-  position: absolute;
-  left: 0.2em;
-  bottom: -0.9em;
+  padding-left: 0.2em;
 `;
 
 export const ItemContainer = styled(ItemContainerBase)``;
 
-export const ItemContainerStreet = styled(ItemContainerBase)`
-  position: relative;
-`;
-
-export const ItemContainerCep = styled(ItemContainerBase)`
-  @media (min-width: 55em) {
-    grid-template-columns: 40%;
-  }
-`;
-
-export const ItemContainerComplement = styled(ItemContainerBase)`
-  @media (min-width: 55em) {
-    grid-template-columns: 40% 1fr;
-  }
-`;
-
-export const ItemContainerCity = styled(ItemContainerBase)`
-  @media (min-width: 55em) {
-    grid-template-columns: 40% 45% 1fr;
-  }
-`;
-
 export const SuggestionsContainer = styled.div`
   position: absolute;
-  z-index: 9999;
+  z-index: 99999;
   width: 100%;
 
   border-bottom: 1px solid ${(props) => props.theme.base.button};
@@ -140,4 +114,11 @@ export const RequiredFieldsInfo = styled.p`
   font-size: ${(props) => props.theme.fontSize[12]};
   font-style: italic;
   color: ${(props) => props.theme.base.subtitle};
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  max-width: 50%;
+
+  padding-block: 1rem;
 `;

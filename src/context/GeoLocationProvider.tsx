@@ -3,7 +3,10 @@ import { createContext, useContext, useState, ReactElement } from "react";
 export type GeoLocation = {
   latitude: number;
   longitude: number;
+  street: string;
+  number: string;
   city: string;
+  neighborhood: string;
   state: string;
   postalCode: string;
 };
@@ -44,6 +47,19 @@ export const GeoLocationProvider = ({
             );
             const data = await response.json();
             const results = data.results[0];
+            const streetObj = results?.address_components.find(
+              (component: any) => component.types.includes("route")
+            );
+            const street = streetObj?.long_name || "";
+            const numberObj = results?.address_components.find(
+              (component: any) => component.types.includes("street_number")
+            );
+            const number = numberObj?.long_name || "";
+            const neighborObj = results?.address_components.find(
+              (component: any) =>
+                component.types.includes("sublocality_level_1")
+            );
+            const neighborhood = neighborObj?.long_name || "";
             const cityObj = results?.address_components.find((component: any) =>
               component.types.includes("administrative_area_level_2")
             );
@@ -57,7 +73,16 @@ export const GeoLocationProvider = ({
               (component: any) => component.types.includes("postal_code")
             );
             const postalCode = postalCodeObj?.long_name || null;
-            setGeoLocation({ latitude, longitude, city, state, postalCode });
+            setGeoLocation({
+              latitude,
+              longitude,
+              street,
+              city,
+              state,
+              postalCode,
+              neighborhood,
+              number,
+            });
           } catch (error) {
             console.error("Error getting geolocation:", error);
           }
