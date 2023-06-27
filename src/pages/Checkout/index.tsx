@@ -14,6 +14,8 @@ import { NavLink } from "react-router-dom";
 import { formatNumberToCurrency } from "../../utils";
 import useCart from "../../hooks/useCart";
 import { CustomButton } from "../../components/CustomButton";
+import LoadingSpinner from "~/components/LoadingSpinner";
+import SkeletonAddressForm from "~/components/Skeletons/SkeletonAddressForm";
 
 const Checkout = () => {
   const theme = useTheme();
@@ -46,7 +48,8 @@ const Checkout = () => {
                 </S.Subtitle>
               </S.TextContainer>
             </S.TitleContainer>
-            <AddressForm />
+            <SkeletonAddressForm />
+            {/*  <AddressForm /> */}
           </S.AddressCard>
         </S.CheckoutContainer>
 
