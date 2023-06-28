@@ -20,14 +20,6 @@ export const GeoLocationContext = createContext<GeoLocationContextType | null>(
   null
 );
 
-export const useGeoLocation = (): GeoLocationContextType => {
-  const context = useContext(GeoLocationContext);
-  if (!context) {
-    throw new Error("useGeoLocation must be used within a GeoLocationProvider");
-  }
-  return context;
-};
-
 type ChildrenType = { children?: ReactElement | ReactElement[] };
 
 export const GeoLocationProvider = ({

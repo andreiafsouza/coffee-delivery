@@ -1,14 +1,27 @@
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useGeoLocation } from "../../../../hooks/useGeoLocation";
 import useInputAutofill from "../../../../hooks/useInputAutofill";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CustomButton } from "../../../../components/CustomButton";
-import { MapPinLine } from "phosphor-react";
+import { MapPinLine, ArrowDownLeft, ArrowLeft } from "phosphor-react";
+
 import { z } from "zod";
 /* styles */
 import * as S from "./styles";
 import { useTheme } from "styled-components";
+import SkeletonAddressForm from "~/components/Skeletons/SkeletonAddressForm";
+import {
+  AddressAction,
+  AddressActionType,
+  AddressStateType,
+} from "~/context/AddressProvider";
+
+type PropsType = {
+  state: AddressStateType;
+  dispatch: React.Dispatch<AddressAction>;
+  REDUCER_ACTIONS: AddressActionType;
+};
 
 const createAddressFormSchema = z.object({
   cep: z
@@ -35,8 +48,14 @@ const createAddressFormSchema = z.object({
 
 export type CreateAddressFormData = z.infer<typeof createAddressFormSchema>;
 
-export const AddressForm = () => {
+export const AddressForm = ({
+  dispatch,
+  REDUCER_ACTIONS,
+  state,
+}: PropsType): ReactElement => {
   const theme = useTheme();
+  const [loading, setLoading] = useState(false);
+  const [showSavedAddress, setShowSavedAddress] = useState(false);
   const { geoLocation, getGeoLocation } = useGeoLocation();
   const [showSuggestions, setShowSuggestions] = useState(false);
   const {
@@ -59,10 +78,11 @@ export const AddressForm = () => {
   const watchedValues = watch();
 
   function createAddress(data: CreateAddressFormData) {
-    window.localStorage.setItem(
-      "@coffee-delivery-address",
-      JSON.stringify(data)
-    );
+    dispatch({
+      type: REDUCER_ACTIONS.SET_ADDRESS,
+      payload: { ...data },
+    });
+    setShowSavedAddress(true);
   }
 
   useEffect(() => {
@@ -74,13 +94,6 @@ export const AddressForm = () => {
       setValue("state", placeDetail.state);
       setValue("cep", placeDetail.cep);
       setValue("number", placeDetail.number);
-    }
-
-    const complementInput = document.getElementById(
-      "complement"
-    ) as HTMLInputElement;
-    if (complementInput) {
-      complementInput.focus();
     }
   }, [placeDetail]);
 
@@ -94,13 +107,6 @@ export const AddressForm = () => {
       setValue("cep", geoLocation.postalCode);
       setValue("number", geoLocation.number);
     }
-
-    const complementInput = document.getElementById(
-      "complement"
-    ) as HTMLInputElement;
-    if (complementInput) {
-      complementInput.focus();
-    }
   }, [geoLocation]);
 
   useEffect(() => {
@@ -108,140 +114,167 @@ export const AddressForm = () => {
   }, [value, setValue]);
 
   useEffect(() => {
-    const streetInput = document.getElementById("street") as HTMLInputElement;
-    if (streetInput) {
-      streetInput.focus();
-    }
-  }, []);
-
-  useEffect(() => {
     clearErrors("street");
   }, [watchedValues.street]);
 
   return (
     <form onSubmit={handleSubmit(createAddress)} autoComplete="off">
-      <S.AddressFormContainer>
-        <S.ButtonContainer>
-          <CustomButton
-            icon={<MapPinLine size={16} color={theme.brand.purple} />}
-            title={"Usar minha localização Atual"}
-            onClick={getGeoLocation}
-          />
-        </S.ButtonContainer>
-        <S.InputContainer>
-          <S.InputLabel htmlFor="street">Rua</S.InputLabel>
-          <S.InputItem
-            id="street"
-            {...register("street")}
-            onChange={handleChange}
-            onBlur={() => setTimeout(() => setShowSuggestions(false), 300)}
-            onFocus={() => setShowSuggestions(true)}
-            className={errors.street && "red-border"}
-            type="text"
-            autoComplete="off"
-          />
-          {showSuggestions && suggestions.length > 0 && (
-            <S.SuggestionsContainer>
-              <S.SuggestionList role="listbox">
-                {suggestions.map((suggestion) => (
-                  <S.SuggestionItem
-                    key={suggestion.place_id}
-                    tabIndex={-1}
-                    role="option"
-                    aria-selected="false"
-                    onClick={() => handleSuggestionSelected(suggestion)}
-                  >
-                    {suggestion.description}
-                  </S.SuggestionItem>
-                ))}
-              </S.SuggestionList>
-            </S.SuggestionsContainer>
-          )}
-          <div id="googlemaps-attribution-container"></div>
-          {errors.street && <S.ErrorText>{errors.street.message}</S.ErrorText>}
-        </S.InputContainer>
-
-        <S.InputContainerRow>
+      {!showSavedAddress ? (
+        <S.AddressFormContainer>
+          <S.ButtonContainer>
+            <CustomButton
+              icon={<MapPinLine size={16} color={theme.brand.yellowDark} />}
+              title={"Usar localização Atual"}
+              onClick={getGeoLocation}
+            />
+          </S.ButtonContainer>
           <S.InputContainer>
-            <S.InputLabel htmlFor="number">Número</S.InputLabel>
+            <S.InputLabel htmlFor="street">Rua</S.InputLabel>
             <S.InputItem
-              id="number"
-              {...register("number")}
-              className={errors.number && "red-border"}
+              id="street"
+              {...register("street")}
+              onChange={handleChange}
+              onBlur={() => setTimeout(() => setShowSuggestions(false), 300)}
+              onFocus={() => setShowSuggestions(true)}
+              className={errors.street && "red-border"}
               type="text"
               autoComplete="off"
             />
-            {errors.number && (
-              <S.ErrorText>{errors.number.message}</S.ErrorText>
+            {showSuggestions && suggestions.length > 0 && (
+              <S.SuggestionsContainer>
+                <S.SuggestionList role="listbox">
+                  {suggestions.map((suggestion) => (
+                    <S.SuggestionItem
+                      key={suggestion.place_id}
+                      tabIndex={-1}
+                      role="option"
+                      aria-selected="false"
+                      onClick={() => handleSuggestionSelected(suggestion)}
+                    >
+                      {suggestion.description}
+                    </S.SuggestionItem>
+                  ))}
+                </S.SuggestionList>
+              </S.SuggestionsContainer>
+            )}
+            <div id="googlemaps-attribution-container"></div>
+            {errors.street && (
+              <S.ErrorText>{errors.street.message}</S.ErrorText>
             )}
           </S.InputContainer>
+
+          <S.InputContainerRow>
+            <S.InputContainer>
+              <S.InputLabel htmlFor="number">Número</S.InputLabel>
+              <S.InputItem
+                id="number"
+                {...register("number")}
+                className={errors.number && "red-border"}
+                type="text"
+                autoComplete="off"
+              />
+              {errors.number && (
+                <S.ErrorText>{errors.number.message}</S.ErrorText>
+              )}
+            </S.InputContainer>
+            <S.InputContainer>
+              <S.InputLabel htmlFor="complement">
+                Complemento (opcional)
+              </S.InputLabel>
+              <S.InputItem
+                id="complement"
+                placeholder="Apto, Quarto, etc..."
+                {...register("complement")}
+                type="text"
+                autoComplete="off"
+              />
+            </S.InputContainer>
+          </S.InputContainerRow>
+
           <S.InputContainer>
-            <S.InputLabel htmlFor="complement">
-              Complemento (opcional)
-            </S.InputLabel>
+            <S.InputLabel htmlFor="neighborhood">Bairro</S.InputLabel>
             <S.InputItem
-              id="complement"
-              placeholder="Apto, Quarto, etc..."
-              {...register("complement")}
+              id="neighborhood"
+              {...register("neighborhood")}
+              className={errors.neighborhood && "red-border"}
               type="text"
               autoComplete="off"
             />
+            {errors.neighborhood && (
+              <S.ErrorText>{errors.neighborhood.message}</S.ErrorText>
+            )}
           </S.InputContainer>
-        </S.InputContainerRow>
 
-        <S.InputContainer>
-          <S.InputLabel htmlFor="neighborhood">Bairro</S.InputLabel>
-          <S.InputItem
-            id="neighborhood"
-            {...register("neighborhood")}
-            className={errors.neighborhood && "red-border"}
-            type="text"
-            autoComplete="off"
-          />
-          {errors.neighborhood && (
-            <S.ErrorText>{errors.neighborhood.message}</S.ErrorText>
-          )}
-        </S.InputContainer>
+          <S.InputContainerRow>
+            <S.InputContainer>
+              <S.InputLabel htmlFor="state">UF</S.InputLabel>
+              <S.InputItem
+                id="state"
+                {...register("state")}
+                className={errors.state && "red-border"}
+                type="text"
+                autoComplete="off"
+              />
+              {errors.state && (
+                <S.ErrorText>{errors.state.message}</S.ErrorText>
+              )}
+            </S.InputContainer>
+            <S.InputContainer>
+              <S.InputLabel htmlFor="city">Cidade</S.InputLabel>
+              <S.InputItem
+                id="city"
+                {...register("city")}
+                className={errors.city && "red-border"}
+                type="text"
+                autoComplete="off"
+              />
+              {errors.city && <S.ErrorText>{errors.city.message}</S.ErrorText>}
+            </S.InputContainer>
+          </S.InputContainerRow>
 
-        <S.InputContainerRow>
           <S.InputContainer>
-            <S.InputLabel htmlFor="state">UF</S.InputLabel>
+            <S.InputLabel htmlFor="cep">CEP</S.InputLabel>
             <S.InputItem
-              id="state"
-              {...register("state")}
-              className={errors.state && "red-border"}
+              id="cep"
+              {...register("cep")}
+              className={errors.cep && "red-border"}
               type="text"
               autoComplete="off"
             />
-            {errors.state && <S.ErrorText>{errors.state.message}</S.ErrorText>}
+            {errors.cep && <S.ErrorText>{errors.cep.message}</S.ErrorText>}
           </S.InputContainer>
-          <S.InputContainer>
-            <S.InputLabel htmlFor="city">Cidade</S.InputLabel>
-            <S.InputItem
-              id="city"
-              {...register("city")}
-              className={errors.city && "red-border"}
-              type="text"
-              autoComplete="off"
+
+          <S.ButtonContainer>
+            <CustomButton
+              type="submit"
+              title={"Salvar endereço"}
+              background={theme.brand.yellowDark}
+              hover={theme.brand.yellow}
+              color={theme.base.white}
             />
-            {errors.city && <S.ErrorText>{errors.city.message}</S.ErrorText>}
-          </S.InputContainer>
-        </S.InputContainerRow>
+          </S.ButtonContainer>
+        </S.AddressFormContainer>
+      ) : (
+        <>
+          <S.TextContainer>
+            <S.TextInfo>
+              <span>{`${watchedValues.street}, ${watchedValues.number}`}</span>
+            </S.TextInfo>
+            <S.TextInfo>{`${watchedValues.neighborhood} - ${watchedValues.city}, ${watchedValues.state}`}</S.TextInfo>
+          </S.TextContainer>
 
-        <S.InputContainer>
-          <S.InputLabel htmlFor="cep">CEP</S.InputLabel>
-          <S.InputItem
-            id="cep"
-            {...register("cep")}
-            className={errors.cep && "red-border"}
-            type="text"
-            autoComplete="off"
-          />
-          {errors.cep && <S.ErrorText>{errors.cep.message}</S.ErrorText>}
-        </S.InputContainer>
-
-        <CustomButton type="submit" title={"Salvar endereço"} />
-      </S.AddressFormContainer>
+          <S.ButtonContainer>
+            <CustomButton
+              icon={<ArrowLeft size={16} color={theme.base.white} />}
+              title={"Alterar Endereço"}
+              background={theme.brand.yellowDark}
+              hover={theme.brand.yellow}
+              color={theme.base.white}
+              onClick={() => setShowSavedAddress(false)}
+            />
+          </S.ButtonContainer>
+        </>
+      )}
     </form>
   );
 };

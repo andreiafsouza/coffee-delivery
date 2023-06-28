@@ -3,6 +3,8 @@ import styled from "styled-components";
 interface ContainerProps {
   size?: "small" | "default";
   color?: string;
+  hover?: string;
+  outlined?: string;
   background?: string;
 }
 
@@ -17,7 +19,8 @@ export const Container = styled.button<ContainerProps>`
   align-items: center;
   justify-content: center;
   gap: ${(props) => (props.size === "small" ? "0.25rem" : "0.75rem")};
-  border: none;
+  border: ${(props) =>
+    props.outlined ? `2px solid ${props.outlined}` : "none"};
   padding-block: ${(props) => (props.size === "small" ? "0.40625rem" : "1rem")};
   padding-inline: 0.5rem;
   background: ${(props) =>
@@ -35,7 +38,8 @@ export const Container = styled.button<ContainerProps>`
   @media (hover: hover) and (pointer: fine) {
     &:hover:not(:focus) {
       transition: all 0.1s ease-in-out;
-      background: ${(props) => props.theme.base.hover};
+      background: ${(props) =>
+        props.hover ? props.hover : props.theme.base.hover};
       color: ${(props) => props.theme.base.subtitle};
     }
   }
@@ -49,6 +53,7 @@ export const TextContainer = styled.p<TextProps>`
   font-family: ${(props) => props.theme.font.main};
   color: ${(props) => (props.color ? props.color : props.theme.base.text)};
   font-size: ${(props) => props.theme.fontSize[12]};
+  font-weight: 600;
   text-transform: uppercase;
   white-space: nowrap;
 `;

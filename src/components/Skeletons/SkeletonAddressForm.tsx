@@ -7,6 +7,8 @@ const SkeletonAddressForm = () => {
       <Skeleton classes="text width-100" />
       <Skeleton classes="text width-100" />
       <Skeleton classes="text width-100" />
+      <Skeleton classes="text width-100" />
+      <Skeleton classes="text width-100" />
     </div>
   );
 };

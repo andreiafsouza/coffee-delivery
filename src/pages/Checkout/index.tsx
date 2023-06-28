@@ -16,9 +16,11 @@ import useCart from "../../hooks/useCart";
 import { CustomButton } from "../../components/CustomButton";
 import LoadingSpinner from "~/components/LoadingSpinner";
 import SkeletonAddressForm from "~/components/Skeletons/SkeletonAddressForm";
+import useAddress from "~/hooks/useAddress";
 
 const Checkout = () => {
   const theme = useTheme();
+  const address = useAddress();
   const { totalItems, totalPrice, dispatch, REDUCER_ACTIONS, cart } = useCart();
   const [confirm, setConfirm] = useState<boolean>(false);
   const [deliveryValue, setDeliveryValue] = useState<number>(3.5);
@@ -48,8 +50,12 @@ const Checkout = () => {
                 </S.Subtitle>
               </S.TextContainer>
             </S.TitleContainer>
-            <SkeletonAddressForm />
-            {/*  <AddressForm /> */}
+            {/*  <SkeletonAddressForm /> */}
+            <AddressForm
+              dispatch={address.dispatch}
+              REDUCER_ACTIONS={address.REDUCER_ACTIONS}
+              state={address.state}
+            />
           </S.AddressCard>
         </S.CheckoutContainer>
 

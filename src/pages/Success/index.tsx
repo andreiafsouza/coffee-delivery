@@ -3,6 +3,7 @@ import * as S from "./styles";
 import { CreateAddressFormData } from "../Checkout/components/AddressForm";
 import { MapPin, CurrencyDollar, Timer } from "phosphor-react";
 import { useTheme } from "styled-components";
+import useAddress from "~/hooks/useAddress";
 
 import delivery from "../../assets/delivery.png";
 
@@ -12,24 +13,7 @@ interface Props {
 
 const Success = ({ color }: Props) => {
   const theme = useTheme();
-  const deliveryAddress = window.localStorage.getItem(
-    "@coffee-delivery-address"
-  );
-  const [address, setAddress] = useState<CreateAddressFormData>({
-    cep: "",
-    street: "",
-    number: "",
-    complement: "",
-    neighborhood: "",
-    city: "",
-    state: "",
-  });
-
-  useEffect(() => {
-    if (deliveryAddress) {
-      setAddress(JSON.parse(deliveryAddress));
-    }
-  }, [deliveryAddress]);
+  const { state } = useAddress();
 
   return (
     <S.Container>
@@ -50,9 +34,9 @@ const Success = ({ color }: Props) => {
                 <S.TextContainer>
                   <S.TextInfo>
                     Entrega em{" "}
-                    <span>{`${address.street}, ${address.number}`}</span>
+                    <span>{`${state.address?.street}, ${state.address?.number}`}</span>
                   </S.TextInfo>
-                  <S.TextInfo>{`${address.neighborhood} - ${address.city}, ${address.state}`}</S.TextInfo>
+                  <S.TextInfo>{`${state.address?.neighborhood} - ${state.address?.city}, ${state.address?.state}`}</S.TextInfo>
                 </S.TextContainer>
               </S.TextInfoContainer>
               <S.TextInfoContainer>

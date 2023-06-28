@@ -8,19 +8,22 @@ import { Router } from "./components/Router";
 import { ProductProvider } from "./context/ProductProvider";
 import { CartProvider } from "./context/CartProvider";
 import { GeoLocationProvider } from "./context/GeoLocationProvider";
+import { AddressProvider } from "./context/AddressProvider";
 
 export function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <BrowserRouter>
-        <GeoLocationProvider>
-          <ProductProvider>
-            <CartProvider>
-              <Router />
-            </CartProvider>
-          </ProductProvider>
-        </GeoLocationProvider>
-        <GlobalStyle />
+        <AddressProvider>
+          <GeoLocationProvider>
+            <ProductProvider>
+              <CartProvider>
+                <Router />
+              </CartProvider>
+            </ProductProvider>
+          </GeoLocationProvider>
+          <GlobalStyle />
+        </AddressProvider>
       </BrowserRouter>
     </ThemeProvider>
   );
