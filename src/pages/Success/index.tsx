@@ -28,7 +28,7 @@ const Success = ({ color }: Props) => {
           <S.OrderInfoOuter>
             <S.OrderInfoInner>
               <S.TextInfoContainer>
-                <S.IconContainer color={theme.brand.purple}>
+                <S.IconContainer color={theme.brand.yellow}>
                   <MapPin size={16} weight="fill" color={theme.base.white} />
                 </S.IconContainer>
                 <S.TextContainer>

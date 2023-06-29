@@ -59,7 +59,7 @@ export const OrderInfoOuter = styled.div`
   background: linear-gradient(
     102.89deg,
     ${(props) => props.theme.brand.yellow} 2.61%,
-    ${(props) => props.theme.brand.purple} 98.76%
+    ${(props) => props.theme.brand.yellow} 98.76%
   );
 `;
 export const OrderInfoInner = styled.div`

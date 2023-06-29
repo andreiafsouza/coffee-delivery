@@ -14,6 +14,8 @@ export const Container = styled.div`
 export const ProductInfoContainer = styled.div`
   display: flex;
   gap: 1.25rem;
+
+  flex-wrap: wrap;
 `;
 
 export const ImageContainer = styled.img`

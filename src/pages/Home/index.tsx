@@ -25,12 +25,12 @@ const Home = () => {
     {
       text: "Embalagem mantém o café intacto",
       icon: <Package size={16} weight="fill" color={theme.base.white} />,
-      color: theme.base.text,
+      color: theme.brand.yellowDark,
     },
     {
       text: "O café chega fresquinho até você",
       icon: <Coffee size={16} weight="fill" color={theme.base.white} />,
-      color: theme.brand.purple,
+      color: theme.brand.yellow,
     },
   ];
 

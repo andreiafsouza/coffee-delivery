@@ -23,6 +23,8 @@ export const CardContainer = styled.div`
   flex-direction: column;
   gap: 0.75rem;
 
+  /* transition: all 0.1s ease-in-out; */
+
   &:last-child {
     grid-row: 1;
   }

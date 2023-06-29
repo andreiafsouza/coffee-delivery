@@ -4,7 +4,7 @@ import { useGeoLocation } from "../../../../hooks/useGeoLocation";
 import useInputAutofill from "../../../../hooks/useInputAutofill";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CustomButton } from "../../../../components/CustomButton";
-import { MapPinLine, ArrowDownLeft, ArrowLeft } from "phosphor-react";
+import { MapPinLine, ArrowLeft } from "phosphor-react";
 
 import { z } from "zod";
 /* styles */
@@ -123,7 +123,7 @@ export const AddressForm = ({
         <S.AddressFormContainer>
           <S.ButtonContainer>
             <CustomButton
-              icon={<MapPinLine size={16} color={theme.brand.yellowDark} />}
+              icon={<MapPinLine size={16} color={theme.brand.yellow} />}
               title={"Usar localização Atual"}
               onClick={getGeoLocation}
             />

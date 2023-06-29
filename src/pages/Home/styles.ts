@@ -8,8 +8,8 @@ export const HomeContainer = styled.main`
 
 export const IntroContainer = styled.div`
   min-height: 34rem;
-  background: url(${background}) center center no-repeat;
-  background-size: 100% 100%;
+  /*   background: url(${background}) center center no-repeat;
+  background-size: 100% 100%; */
 
   display: flex;
   align-items: center;
@@ -84,7 +84,8 @@ export const IntroItem = styled.div`
 `;
 
 export const IntroItemIcon = styled.div`
-  background: ${({ color }) => (color ? color : "#fff")};
+  background: ${(props) =>
+    props.color ? props.color : props.theme.brand.yellowDark};
   min-width: 2rem;
   min-height: 2rem;
 

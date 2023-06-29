@@ -67,7 +67,8 @@ export const ProductTitle = styled.p`
 
 export const ProductDescription = styled.p`
   text-align: center;
-  font-size: ${(props) => props.theme.fontSize[14]};
+  font-size: ${(props) => props.theme.fontSize[12]};
+  min-height: 2.625rem;
 `;
 
 export const ActionContainer = styled.div`
@@ -99,7 +100,7 @@ export const ShoppingCartAdd = styled.button`
   display: flex;
   align-items: center;
   padding: 0.5rem;
-  background: ${(props) => props.theme.brand.purpleDark};
+  background: ${(props) => props.theme.brand.yellowDark};
   border-radius: 6px;
   border: none;
 
@@ -114,7 +115,7 @@ export const ShoppingCartAdd = styled.button`
   @media (hover: hover) and (pointer: fine) {
     &:hover:not(:disabled) {
       transition: all 0.1s ease-in-out;
-      background: ${(props) => props.theme.brand.purple};
+      background: ${(props) => props.theme.brand.yellow};
     }
   }
 `;

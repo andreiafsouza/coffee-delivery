@@ -55,8 +55,8 @@ export const Header = () => {
             onMouseEnter={handleOpenLocationMenu}
             onMouseLeave={handleCloseLocationMenu}
           >
-            <MapPin size={22} weight="fill" color={theme.brand.purple} />
-            {address}
+            <MapPin size={22} weight="fill" color={theme.base.background} />
+            <S.AdressText>{address}</S.AdressText>
           </S.LocationTag>
           <S.DropdownLocation
             title=""
@@ -65,8 +65,8 @@ export const Header = () => {
             onMouseLeave={handleCloseLocationMenu}
           >
             <S.GeoLocationButton onClick={handleGetGeoLocation}>
-              <MapPin size={22} weight="fill" color={theme.brand.purple} />
-              Utilizar minha localização
+              <MapPin size={22} weight="fill" color={theme.base.subtitle} />
+              Usar minha localização
             </S.GeoLocationButton>
           </S.DropdownLocation>
           <NavLink to="/checkout" title="Checkout">

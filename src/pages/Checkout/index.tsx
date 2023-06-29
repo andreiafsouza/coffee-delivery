@@ -61,7 +61,7 @@ const Checkout = () => {
 
         <S.PaymentCard>
           <S.TitleContainer>
-            <CurrencyDollar size={22} color={theme.brand.purple} />
+            <CurrencyDollar size={22} color={theme.brand.yellow} />
             <S.TextContainer>
               <S.Title>Pagamento</S.Title>
               <S.Subtitle>
@@ -71,15 +71,15 @@ const Checkout = () => {
           </S.TitleContainer>
           <S.ButtonContainer>
             <CustomButton
-              icon={<CreditCard size={16} color={theme.brand.purple} />}
+              icon={<CreditCard size={16} color={theme.brand.yellow} />}
               title={"Cartão de crédito"}
             />
             <CustomButton
-              icon={<Bank size={16} color={theme.brand.purple} />}
+              icon={<Bank size={16} color={theme.brand.yellow} />}
               title={"cartão de débito"}
             />
             <CustomButton
-              icon={<Money size={16} color={theme.brand.purple} />}
+              icon={<Money size={16} color={theme.brand.yellow} />}
               title={"dinheiro"}
             />
           </S.ButtonContainer>

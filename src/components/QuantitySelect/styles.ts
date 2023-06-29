@@ -20,7 +20,7 @@ export const IconContainer = styled.button`
   background: none;
 
   svg {
-    color: ${(props) => props.theme.brand.purple};
+    color: ${(props) => props.theme.brand.yellow};
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -28,7 +28,7 @@ export const IconContainer = styled.button`
       transition: color 0.1s ease-in-out;
       background: ${(props) => props.theme.base.hover};
       svg {
-        color: ${(props) => props.theme.brand.purpleDark};
+        color: ${(props) => props.theme.brand.yellowDark};
       }
     }
   }

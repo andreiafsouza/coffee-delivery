@@ -22,7 +22,8 @@ export const Container = styled.button<ContainerProps>`
   border: ${(props) =>
     props.outlined ? `2px solid ${props.outlined}` : "none"};
   padding-block: ${(props) => (props.size === "small" ? "0.40625rem" : "1rem")};
-  padding-inline: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.7rem;
   background: ${(props) =>
     props.background ? props.background : props.theme.base.button};
   border-radius: 6px;
@@ -31,8 +32,8 @@ export const Container = styled.button<ContainerProps>`
   cursor: pointer;
 
   :focus {
-    background: ${(props) => props.theme.brand.purpleLight};
-    box-shadow: 0 0 0 2px ${(props) => props.theme.brand.purple};
+    background: ${(props) => props.theme.base.button};
+    box-shadow: 0 0 0 2px ${(props) => props.theme.brand.yellow};
   }
 
   @media (hover: hover) and (pointer: fine) {

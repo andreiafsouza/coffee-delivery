@@ -3,8 +3,6 @@ import styled from "styled-components";
 export const AddressFormContainer = styled.div`
   display: grid;
   gap: 1rem;
-  transition: all 0.1s ease-in-out;
-  /*  min-height: 530px; */
 `;
 
 const ItemContainerBase = styled.div`
@@ -127,6 +125,10 @@ export const ButtonContainer = styled.div`
   max-width: 50%;
 
   padding-block: 1rem;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+    max-width: 100%;
+  }
 `;
 
 export const TextContainer = styled.div``;
