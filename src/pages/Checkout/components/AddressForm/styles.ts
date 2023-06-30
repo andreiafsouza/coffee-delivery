@@ -71,6 +71,13 @@ export const InputItem = styled(InputBase)`
   }
 `;
 
+export const SearchIconWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+`;
+
 export const ErrorText = styled.span`
   color: ${(props) => props.theme.base.error};
   font-size: ${(props) => props.theme.fontSize[12]};

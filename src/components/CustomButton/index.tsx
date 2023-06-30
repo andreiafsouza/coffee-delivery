@@ -10,6 +10,7 @@ interface Props {
   hover?: string;
   outlined?: string;
   background?: string;
+  disabled?: boolean;
   size?: "small" | "default";
   onClick?: () => void;
 }
@@ -23,6 +24,7 @@ export const CustomButton = ({
   color,
   background,
   outlined,
+  disabled,
   onClick,
 }: Props) => {
   const theme = useTheme();
@@ -35,6 +37,7 @@ export const CustomButton = ({
       hover={hover}
       onClick={onClick}
       outlined={outlined}
+      disabled={disabled}
     >
       <S.IconContainer>{icon}</S.IconContainer>
       <S.TextContainer color={color}>{title}</S.TextContainer>

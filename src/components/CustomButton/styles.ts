@@ -6,12 +6,24 @@ interface ContainerProps {
   hover?: string;
   outlined?: string;
   background?: string;
+  disabled?: boolean;
 }
 
 interface TextProps {
   color?: string;
   size?: "small" | "default";
 }
+
+const getBackgroudColor = (props: any) => {
+  let backgroundColor = props.theme.base.button;
+  if (props.background && !props.disabled) {
+    backgroundColor = props.background;
+  } else if (props.disabled) {
+    backgroundColor = props.theme.base.disabled;
+  }
+
+  return backgroundColor;
+};
 
 export const Container = styled.button<ContainerProps>`
   width: 100%;
@@ -24,25 +36,28 @@ export const Container = styled.button<ContainerProps>`
   padding-block: ${(props) => (props.size === "small" ? "0.40625rem" : "1rem")};
   padding-left: 0.5rem;
   padding-right: 0.7rem;
-  background: ${(props) =>
-    props.background ? props.background : props.theme.base.button};
+  background: ${(props) => getBackgroudColor(props)};
   border-radius: 6px;
 
   transition: all 0.1s ease-in-out;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
 
   :focus {
-    background: ${(props) => props.theme.base.button};
-    box-shadow: 0 0 0 2px ${(props) => props.theme.brand.yellow};
+    background: ${(props) => !props.disabled && props.theme.base.button};
+    box-shadow: ${(props) =>
+      !props.disabled && `0 0 0 2px ${props.theme.brand.yellow}`};
   }
 
   @media (hover: hover) and (pointer: fine) {
-    &:hover:not(:focus) {
-      transition: all 0.1s ease-in-out;
-      background: ${(props) =>
-        props.hover ? props.hover : props.theme.base.hover};
-      color: ${(props) => props.theme.base.subtitle};
-    }
+    ${(props) =>
+      !props.disabled &&
+      `
+      &:hover:not(:focus) {
+        transition: all 0.1s ease-in-out;
+        background: ${props.hover ? props.hover : props.theme.base.hover};
+        color: ${props.theme.base.subtitle};
+      }
+    `}
   }
 `;
 

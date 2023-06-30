@@ -4,7 +4,7 @@ import { useGeoLocation } from "../../../../hooks/useGeoLocation";
 import useInputAutofill from "../../../../hooks/useInputAutofill";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CustomButton } from "../../../../components/CustomButton";
-import { MapPinLine, ArrowLeft } from "phosphor-react";
+import { MapPinLine, ArrowLeft, MagnifyingGlass } from "phosphor-react";
 
 import { z } from "zod";
 /* styles */
@@ -54,10 +54,11 @@ export const AddressForm = ({
   state,
 }: PropsType): ReactElement => {
   const theme = useTheme();
-  const [loading, setLoading] = useState(false);
-  const [showSavedAddress, setShowSavedAddress] = useState(false);
   const { geoLocation, getGeoLocation } = useGeoLocation();
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const hasAddressSaved = !!state.address;
+  const [showSavedAddress, setShowSavedAddress] = useState(false);
+  const [showSkeleton, setShowSkeleton] = useState(false);
   const {
     value,
     suggestions,
@@ -117,6 +118,25 @@ export const AddressForm = ({
     clearErrors("street");
   }, [watchedValues.street]);
 
+  useEffect(() => {
+    if (hasAddressSaved) {
+      setShowSavedAddress(true);
+    }
+  }, [hasAddressSaved]);
+
+  useEffect(() => {
+    if (!hasAddressSaved) {
+      setValue("street", "");
+      setValue("neighborhood", "");
+      setValue("city", "");
+      setValue("state", "");
+      setValue("cep", "");
+      setValue("number", "");
+    } else if (state?.address?.street) {
+      setValue("street", state.address.street);
+    }
+  }, []);
+
   return (
     <form onSubmit={handleSubmit(createAddress)} autoComplete="off">
       {!showSavedAddress ? (
@@ -125,124 +145,141 @@ export const AddressForm = ({
             <CustomButton
               icon={<MapPinLine size={16} color={theme.brand.yellow} />}
               title={"Usar localização Atual"}
-              onClick={getGeoLocation}
+              onClick={() => {
+                getGeoLocation();
+                setShowSkeleton(true);
+                setTimeout(() => setShowSkeleton(false), 500);
+              }}
             />
           </S.ButtonContainer>
-          <S.InputContainer>
-            <S.InputLabel htmlFor="street">Rua</S.InputLabel>
-            <S.InputItem
-              id="street"
-              {...register("street")}
-              onChange={handleChange}
-              onBlur={() => setTimeout(() => setShowSuggestions(false), 300)}
-              onFocus={() => setShowSuggestions(true)}
-              className={errors.street && "red-border"}
-              type="text"
-              autoComplete="off"
-            />
-            {showSuggestions && suggestions.length > 0 && (
-              <S.SuggestionsContainer>
-                <S.SuggestionList role="listbox">
-                  {suggestions.map((suggestion) => (
-                    <S.SuggestionItem
-                      key={suggestion.place_id}
-                      tabIndex={-1}
-                      role="option"
-                      aria-selected="false"
-                      onClick={() => handleSuggestionSelected(suggestion)}
-                    >
-                      {suggestion.description}
-                    </S.SuggestionItem>
-                  ))}
-                </S.SuggestionList>
-              </S.SuggestionsContainer>
-            )}
-            <div id="googlemaps-attribution-container"></div>
-            {errors.street && (
-              <S.ErrorText>{errors.street.message}</S.ErrorText>
-            )}
-          </S.InputContainer>
+          {showSkeleton ? (
+            <SkeletonAddressForm />
+          ) : (
+            <>
+              <S.InputContainer>
+                <S.InputLabel htmlFor="street">Rua</S.InputLabel>
+                <S.InputItem
+                  id="street"
+                  {...register("street")}
+                  onChange={handleChange}
+                  onBlur={() =>
+                    setTimeout(() => setShowSuggestions(false), 300)
+                  }
+                  onFocus={() => setShowSuggestions(true)}
+                  className={errors.street && "red-border"}
+                  type="text"
+                  autoComplete="off"
+                />
+                <S.SearchIconWrapper>
+                  <MagnifyingGlass size={18} color={theme.base.label} />
+                </S.SearchIconWrapper>
+                {showSuggestions && suggestions.length > 0 && (
+                  <S.SuggestionsContainer>
+                    <S.SuggestionList role="listbox">
+                      {suggestions.map((suggestion) => (
+                        <S.SuggestionItem
+                          key={suggestion.place_id}
+                          tabIndex={-1}
+                          role="option"
+                          aria-selected="false"
+                          onClick={() => handleSuggestionSelected(suggestion)}
+                        >
+                          {suggestion.description}
+                        </S.SuggestionItem>
+                      ))}
+                    </S.SuggestionList>
+                  </S.SuggestionsContainer>
+                )}
+                <div id="googlemaps-attribution-container"></div>
+                {errors.street && (
+                  <S.ErrorText>{errors.street.message}</S.ErrorText>
+                )}
+              </S.InputContainer>
 
-          <S.InputContainerRow>
-            <S.InputContainer>
-              <S.InputLabel htmlFor="number">Número</S.InputLabel>
-              <S.InputItem
-                id="number"
-                {...register("number")}
-                className={errors.number && "red-border"}
-                type="text"
-                autoComplete="off"
-              />
-              {errors.number && (
-                <S.ErrorText>{errors.number.message}</S.ErrorText>
-              )}
-            </S.InputContainer>
-            <S.InputContainer>
-              <S.InputLabel htmlFor="complement">
-                Complemento (opcional)
-              </S.InputLabel>
-              <S.InputItem
-                id="complement"
-                placeholder="Apto, Quarto, etc..."
-                {...register("complement")}
-                type="text"
-                autoComplete="off"
-              />
-            </S.InputContainer>
-          </S.InputContainerRow>
+              <S.InputContainerRow>
+                <S.InputContainer>
+                  <S.InputLabel htmlFor="number">Número</S.InputLabel>
+                  <S.InputItem
+                    id="number"
+                    {...register("number")}
+                    className={errors.number && "red-border"}
+                    type="text"
+                    autoComplete="off"
+                  />
+                  {errors.number && (
+                    <S.ErrorText>{errors.number.message}</S.ErrorText>
+                  )}
+                </S.InputContainer>
+                <S.InputContainer>
+                  <S.InputLabel htmlFor="complement">
+                    Complemento (opcional)
+                  </S.InputLabel>
+                  <S.InputItem
+                    id="complement"
+                    placeholder="Apto, Quarto, etc..."
+                    {...register("complement")}
+                    type="text"
+                    autoComplete="off"
+                  />
+                </S.InputContainer>
+              </S.InputContainerRow>
 
-          <S.InputContainer>
-            <S.InputLabel htmlFor="neighborhood">Bairro</S.InputLabel>
-            <S.InputItem
-              id="neighborhood"
-              {...register("neighborhood")}
-              className={errors.neighborhood && "red-border"}
-              type="text"
-              autoComplete="off"
-            />
-            {errors.neighborhood && (
-              <S.ErrorText>{errors.neighborhood.message}</S.ErrorText>
-            )}
-          </S.InputContainer>
+              <S.InputContainer>
+                <S.InputLabel htmlFor="neighborhood">Bairro</S.InputLabel>
+                <S.InputItem
+                  id="neighborhood"
+                  {...register("neighborhood")}
+                  className={errors.neighborhood && "red-border"}
+                  type="text"
+                  autoComplete="off"
+                />
+                {errors.neighborhood && (
+                  <S.ErrorText>{errors.neighborhood.message}</S.ErrorText>
+                )}
+              </S.InputContainer>
 
-          <S.InputContainerRow>
-            <S.InputContainer>
-              <S.InputLabel htmlFor="state">UF</S.InputLabel>
-              <S.InputItem
-                id="state"
-                {...register("state")}
-                className={errors.state && "red-border"}
-                type="text"
-                autoComplete="off"
-              />
-              {errors.state && (
-                <S.ErrorText>{errors.state.message}</S.ErrorText>
-              )}
-            </S.InputContainer>
-            <S.InputContainer>
-              <S.InputLabel htmlFor="city">Cidade</S.InputLabel>
-              <S.InputItem
-                id="city"
-                {...register("city")}
-                className={errors.city && "red-border"}
-                type="text"
-                autoComplete="off"
-              />
-              {errors.city && <S.ErrorText>{errors.city.message}</S.ErrorText>}
-            </S.InputContainer>
-          </S.InputContainerRow>
+              <S.InputContainerRow>
+                <S.InputContainer>
+                  <S.InputLabel htmlFor="state">UF</S.InputLabel>
+                  <S.InputItem
+                    id="state"
+                    {...register("state")}
+                    className={errors.state && "red-border"}
+                    type="text"
+                    autoComplete="off"
+                  />
+                  {errors.state && (
+                    <S.ErrorText>{errors.state.message}</S.ErrorText>
+                  )}
+                </S.InputContainer>
+                <S.InputContainer>
+                  <S.InputLabel htmlFor="city">Cidade</S.InputLabel>
+                  <S.InputItem
+                    id="city"
+                    {...register("city")}
+                    className={errors.city && "red-border"}
+                    type="text"
+                    autoComplete="off"
+                  />
+                  {errors.city && (
+                    <S.ErrorText>{errors.city.message}</S.ErrorText>
+                  )}
+                </S.InputContainer>
+              </S.InputContainerRow>
 
-          <S.InputContainer>
-            <S.InputLabel htmlFor="cep">CEP</S.InputLabel>
-            <S.InputItem
-              id="cep"
-              {...register("cep")}
-              className={errors.cep && "red-border"}
-              type="text"
-              autoComplete="off"
-            />
-            {errors.cep && <S.ErrorText>{errors.cep.message}</S.ErrorText>}
-          </S.InputContainer>
+              <S.InputContainer>
+                <S.InputLabel htmlFor="cep">CEP</S.InputLabel>
+                <S.InputItem
+                  id="cep"
+                  {...register("cep")}
+                  className={errors.cep && "red-border"}
+                  type="text"
+                  autoComplete="off"
+                />
+                {errors.cep && <S.ErrorText>{errors.cep.message}</S.ErrorText>}
+              </S.InputContainer>
+            </>
+          )}
 
           <S.ButtonContainer>
             <CustomButton
@@ -258,9 +295,9 @@ export const AddressForm = ({
         <>
           <S.TextContainer>
             <S.TextInfo>
-              <span>{`${watchedValues.street}, ${watchedValues.number}`}</span>
+              <span>{`${state?.address?.street}, ${state.address?.number}`}</span>
             </S.TextInfo>
-            <S.TextInfo>{`${watchedValues.neighborhood} - ${watchedValues.city}, ${watchedValues.state}`}</S.TextInfo>
+            <S.TextInfo>{`${state.address?.neighborhood} - ${state.address?.city}, ${state.address?.state}`}</S.TextInfo>
           </S.TextContainer>
 
           <S.ButtonContainer>

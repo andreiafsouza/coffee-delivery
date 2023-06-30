@@ -7,23 +7,35 @@ interface scrollProps {
 export const Container = styled.main`
   max-width: 74rem;
   margin: 0 auto;
-  padding: 0 1rem 1rem;
+`;
+
+export const Checkout = styled.div`
   gap: 2rem;
   display: grid;
   justify-content: center;
+  padding: 0 1rem 1rem;
 
   @media (min-width: 60em) {
-    grid-template-columns: 57.14285711429% 1fr;
+    grid-template-columns: 57% 1fr;
     padding: 0 2rem 2rem;
   }
 `;
 
-export const CardContainer = styled.div`
+export const BackButtonWrapper = styled.div`
+  padding-inline: 1rem;
+  display: flex;
+  align-items: flex-start;
+  max-width: fit-content;
+
+  @media (min-width: 60em) {
+    padding-inline: 2rem;
+  }
+`;
+
+export const CardContainer = styled.section`
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-
-  /* transition: all 0.1s ease-in-out; */
+  gap: 1.5rem;
 
   &:last-child {
     grid-row: 1;
@@ -119,7 +131,7 @@ export const ProductListContainer = styled.div<scrollProps>`
   /* Firefox */
   scrollbar-width: thin;
 
-  & > :first-child {
+  & > :first-child(div) {
     padding-top: 0;
   }
 `;
@@ -153,30 +165,24 @@ export const TotalPriceContainer = styled(ItemContainerBase)`
   color: ${(props) => props.theme.base.subtitle};
 `;
 
-export const ConfirmButton = styled.div`
-  width: 100%;
-  font-family: ${(props) => props.theme.font.main};
-  background: ${(props) => props.theme.brand.yellow};
-  color: ${(props) => props.theme.base.white};
-  font-size: ${(props) => props.theme.fontSize[14]};
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-block: 0.75rem;
-  text-transform: uppercase;
-  border-radius: 6px;
-  transition: all 0.1s ease-in-out;
-  cursor: pointer;
+export const ItemsText = styled.span``;
 
-  @media (hover: hover) and (pointer: fine) {
-    &:hover {
-      transition: all 0.1s ease-in-out;
-      background: ${(props) => props.theme.brand.yellowDark};
-    }
-  }
+export const NoItemInCartContainer = styled.div`
+  padding-block: 0.5rem;
 `;
 
-export const NoItemInCartTag = styled.p`
+export const NoItemInCartText = styled.p`
   text-align: center;
+  color: ${(props) => props.theme.base.error};
+`;
+
+export const TasksCointainer = styled.div`
+  padding-top: 1rem;
+`;
+
+export const Tasks = styled.p`
+  color: ${(props) => props.theme.brand.yellowLight};
+  font-size: ${(props) => props.theme.fontSize[14]};
+  padding-bottom: 0.4rem;
+  display: flex;
 `;

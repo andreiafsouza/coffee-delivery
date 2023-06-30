@@ -17,6 +17,7 @@ export const defaultTheme = {
     title: "#f7f1e8",
     success: "#52BB50",
     error: "#FF6363",
+    disabled: "#8D8686",
   },
   font: {
     main: `'Roboto', sans-serif`,

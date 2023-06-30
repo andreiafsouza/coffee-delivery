@@ -36,7 +36,7 @@ export const LocationTag = styled.button`
   padding: 0.5rem;
   gap: 0.25rem;
   border: none;
-  color: ${(props) => props.theme.base.background};
+  color: ${(props) => props.theme.brand.yellowDark};
   background: ${(props) => props.theme.brand.yellowLight};
   border-radius: 6px;
   cursor: pointer;

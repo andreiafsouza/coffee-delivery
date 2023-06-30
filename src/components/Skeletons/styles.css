@@ -1,8 +1,8 @@
 .skeleton {
-  background-color: rgb(199, 199, 199);
+  background-color: #edd9b920;
   margin: 1rem 0;
   border-radius: 4px;
-  padding: 1rem;
+  padding: 1.17rem;
 }
 
 .skeleton.title {

@@ -55,7 +55,7 @@ export const Header = () => {
             onMouseEnter={handleOpenLocationMenu}
             onMouseLeave={handleCloseLocationMenu}
           >
-            <MapPin size={22} weight="fill" color={theme.base.background} />
+            <MapPin size={22} weight="fill" color={theme.brand.yellowDark} />
             <S.AdressText>{address}</S.AdressText>
           </S.LocationTag>
           <S.DropdownLocation

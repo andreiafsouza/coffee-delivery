@@ -6,6 +6,7 @@ import { useTheme } from "styled-components";
 import useAddress from "~/hooks/useAddress";
 
 import delivery from "../../assets/delivery.png";
+import { useLocation } from "react-router-dom";
 
 interface Props {
   color?: string;
@@ -13,7 +14,10 @@ interface Props {
 
 const Success = ({ color }: Props) => {
   const theme = useTheme();
+  const locationState = useLocation();
   const { state } = useAddress();
+  const address = state?.address;
+  const paymentMethod = locationState?.state;
 
   return (
     <S.Container>
@@ -34,9 +38,9 @@ const Success = ({ color }: Props) => {
                 <S.TextContainer>
                   <S.TextInfo>
                     Entrega em{" "}
-                    <span>{`${state.address?.street}, ${state.address?.number}`}</span>
+                    <span>{`${address?.street}, ${address?.number}`}</span>
                   </S.TextInfo>
-                  <S.TextInfo>{`${state.address?.neighborhood} - ${state.address?.city}, ${state.address?.state}`}</S.TextInfo>
+                  <S.TextInfo>{`${address?.neighborhood} - ${address?.city}, ${address?.state}`}</S.TextInfo>
                 </S.TextContainer>
               </S.TextInfoContainer>
               <S.TextInfoContainer>
@@ -54,7 +58,7 @@ const Success = ({ color }: Props) => {
                 </S.IconContainer>
                 <S.TextContainer>
                   <S.TextInfo>Pagamento na entrega</S.TextInfo>
-                  <S.TextInfoBold>Cartão de Crédito</S.TextInfoBold>
+                  <S.TextInfoBold>{paymentMethod}</S.TextInfoBold>
                 </S.TextContainer>
               </S.TextInfoContainer>
             </S.OrderInfoInner>
