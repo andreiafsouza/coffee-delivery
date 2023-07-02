@@ -134,6 +134,11 @@ export const AddressForm = ({
       setValue("number", "");
     } else if (state?.address?.street) {
       setValue("street", state.address.street);
+      setValue("neighborhood", state.address.neighborhood);
+      setValue("city", state.address.city);
+      setValue("state", state.address.state);
+      setValue("cep", state.address.cep);
+      setValue("number", state.address.number);
     }
   }, []);
 
@@ -154,6 +159,7 @@ export const AddressForm = ({
         setValue("neighborhood", data.bairro);
         setValue("city", data.localidade);
         setValue("state", data.uf);
+        setValue("number", "");
       } catch (error) {
         console.error(error);
       }
