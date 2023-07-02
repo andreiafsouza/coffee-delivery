@@ -137,6 +137,29 @@ export const AddressForm = ({
     }
   }, []);
 
+  const handleCepValue = async (value: string) => {
+    const cep = value.replace(/[^0-9]/, "");
+
+    if (value.length !== 8) {
+      return false;
+    } else {
+      const url = `https://viacep.com.br/ws/${cep}/json/`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        clearErrors();
+        setValue("street", data.logradouro);
+        setValue("neighborhood", data.bairro);
+        setValue("city", data.localidade);
+        setValue("state", data.uf);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit(createAddress)} autoComplete="off">
       {!showSavedAddress ? (
@@ -275,6 +298,7 @@ export const AddressForm = ({
                   className={errors.cep && "red-border"}
                   type="text"
                   autoComplete="off"
+                  onChange={(event) => handleCepValue(event.target.value)}
                 />
                 {errors.cep && <S.ErrorText>{errors.cep.message}</S.ErrorText>}
               </S.InputContainer>
