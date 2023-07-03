@@ -86,6 +86,30 @@ export const AddressForm = ({
     setShowSavedAddress(true);
   }
 
+  const handleCepValue = async (value: string) => {
+    const cep = value.replace(/[^0-9]/, "");
+
+    if (value.length !== 8) {
+      return false;
+    } else {
+      const url = `https://viacep.com.br/ws/${cep}/json/`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        clearErrors();
+        setValue("street", data.logradouro);
+        setValue("neighborhood", data.bairro);
+        setValue("city", data.localidade);
+        setValue("state", data.uf);
+        setValue("number", "");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   useEffect(() => {
     if (placeDetail) {
       clearErrors();
@@ -141,30 +165,6 @@ export const AddressForm = ({
       setValue("number", state.address.number);
     }
   }, []);
-
-  const handleCepValue = async (value: string) => {
-    const cep = value.replace(/[^0-9]/, "");
-
-    if (value.length !== 8) {
-      return false;
-    } else {
-      const url = `https://viacep.com.br/ws/${cep}/json/`;
-
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-
-        clearErrors();
-        setValue("street", data.logradouro);
-        setValue("neighborhood", data.bairro);
-        setValue("city", data.localidade);
-        setValue("state", data.uf);
-        setValue("number", "");
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
 
   return (
     <form onSubmit={handleSubmit(createAddress)} autoComplete="off">

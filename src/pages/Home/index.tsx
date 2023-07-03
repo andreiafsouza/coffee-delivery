@@ -44,8 +44,8 @@ const Home = () => {
                 Encontre o café perfeito para qualquer hora do dia
               </S.IntroTitle>
               <S.IntroSubtitle>
-                Com o Product Delivery você recebe seu café onde estiver, a
-                qualquer hora
+                Com o Express Coffee você recebe seu café onde estiver, a
+                qualquer hora.
               </S.IntroSubtitle>
             </S.IntroTextContainer>
             <S.IntroItemContainer>
