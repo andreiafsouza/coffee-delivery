@@ -1,6 +1,6 @@
 import * as S from "./styles";
 import { useTheme } from "styled-components";
-import coffeeMug from "../../assets/coffeeMug.png";
+import coffeeMug from "../../assets/mug-image.png";
 import useCart from "../../hooks/useCart";
 import useProduct from "../../hooks/useProduct";
 import { ShoppingCart, Package, Timer, Coffee } from "phosphor-react";
