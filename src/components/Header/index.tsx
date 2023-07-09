@@ -1,11 +1,12 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { Logo } from "../Logo";
+import { LogoExtended } from "../LogoExtended";
 import * as S from "./styles";
 import { MapPin, ShoppingCart } from "phosphor-react";
 import { useTheme } from "styled-components";
 import { NavLink } from "react-router-dom";
 import { Badge } from "../Badge";
 import { useGeoLocation } from "../../hooks/useGeoLocation";
+import { Logo } from "../Logo";
 
 export const Header = () => {
   const theme = useTheme();
@@ -46,8 +47,13 @@ export const Header = () => {
   return (
     <S.Container>
       <S.HeaderContainer navPadding={navPadding}>
-        <NavLink to="/" title="Home">
-          <Logo />
+        <NavLink to="/" title="Express Coffee - Home">
+          <S.LogoExtendedContainer>
+            <LogoExtended />
+          </S.LogoExtendedContainer>
+          <S.LogoContainer>
+            <Logo />
+          </S.LogoContainer>
         </NavLink>
         <S.ActionsContainer>
           <S.LocationTag

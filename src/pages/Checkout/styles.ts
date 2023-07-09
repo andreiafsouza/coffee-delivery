@@ -14,6 +14,7 @@ export const Checkout = styled.div`
   display: grid;
   justify-content: center;
   padding: 0 1rem 1rem;
+  margin-bottom: 2rem;
 
   @media (min-width: 60em) {
     grid-template-columns: 57% 1fr;

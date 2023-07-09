@@ -14,13 +14,33 @@ export const Container = styled.header`
 export const HeaderContainer = styled.header<HeaderContainerProps>`
   max-width: 74rem;
   margin: 0 auto;
-  padding-block: ${(props) => (props.navPadding ? "0.75rem" : "2rem")};
-  padding-inline: 2rem;
+  padding-block: ${(props) => (props.navPadding ? "1rem" : "2rem")};
+  padding-inline: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   transition: all 0.2s ease-out;
+
+  @media (min-width: 55em) {
+    padding-inline: 2rem;
+  }
+`;
+
+export const LogoExtendedContainer = styled.div`
+  display: none;
+
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+    display: flex;
+  }
+`;
+
+export const LogoContainer = styled.div`
+  display: flex;
+
+  @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
+    display: none;
+  }
 `;
 
 export const ActionsContainer = styled.div`

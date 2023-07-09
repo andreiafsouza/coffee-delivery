@@ -8,8 +8,8 @@ export const HomeContainer = styled.main`
 
 export const IntroContainer = styled.div`
   min-height: 34rem;
-  /*  background: url(${background}) center center no-repeat;
-  background-size: 100% 100%; */
+  background: url(${background}) center center no-repeat;
+  background-size: 100% 100%;
 
   display: flex;
   align-items: center;

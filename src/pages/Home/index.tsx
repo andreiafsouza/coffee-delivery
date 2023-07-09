@@ -78,7 +78,7 @@ const Home = () => {
           <S.IntroRightContent>
             <img
               src={coffeeMug}
-              alt="Copo de café descartável com um rótulo preto em um fundo amarelo com vários grãos e pó de café ao redor"
+              alt="Copo de café descartável com um rótulo marrom em um fundo amarelo gold com vários grãos de café ao redor"
             />
           </S.IntroRightContent>
         </S.IntroContent>

@@ -188,7 +188,7 @@ const Checkout = () => {
                 ) : null}
               </S.Tasks>
               <S.Tasks style={{ textDecoration: city && "line-through" }}>
-                Salve um endereço de para a entrega.
+                Salve um endereço para a entrega.
                 {city ? (
                   <Check size={16} weight="fill" color={theme.base.success} />
                 ) : null}
@@ -198,7 +198,7 @@ const Checkout = () => {
                   textDecoration: paymentMethod ? "line-through" : "none",
                 }}
               >
-                Selecione a a forma de pagamento.
+                Selecione a forma de pagamento.
                 {paymentMethod ? (
                   <Check size={16} weight="fill" color={theme.base.success} />
                 ) : null}
