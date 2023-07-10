@@ -4,7 +4,7 @@ interface ContainerProps {
   size?: "small" | "default";
   color?: string;
   hover?: string;
-  outlined?: string;
+  outlined?: boolean;
   background?: string;
   disabled?: boolean;
 }
@@ -31,8 +31,7 @@ export const Container = styled.button<ContainerProps>`
   align-items: center;
   justify-content: center;
   gap: ${(props) => (props.size === "small" ? "0.25rem" : "0.75rem")};
-  border: ${(props) =>
-    props.outlined ? `2px solid ${props.outlined}` : "none"};
+  border: none;
   padding-block: ${(props) => (props.size === "small" ? "0.40625rem" : "1rem")};
   padding-left: 0.5rem;
   padding-right: 0.7rem;
@@ -42,11 +41,17 @@ export const Container = styled.button<ContainerProps>`
   transition: all 0.1s ease-in-out;
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
 
-  :focus {
-    background: ${(props) => !props.disabled && props.theme.base.button};
-    box-shadow: ${(props) =>
-      !props.disabled && `0 0 0 2px ${props.theme.brand.yellow}`};
-  }
+  ${(props) =>
+    props.outlined && !props.disabled
+      ? `
+      &:focus {
+        background: ${!props.disabled ? props.theme.base.button : "none"};
+        box-shadow: ${
+          !props.disabled ? `0 0 0 2px ${props.theme.brand.yellow}` : "none"
+        };
+      }
+    `
+      : ""}
 
   @media (hover: hover) and (pointer: fine) {
     ${(props) =>

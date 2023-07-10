@@ -16,11 +16,11 @@ export function App() {
       <BrowserRouter>
         <AddressProvider>
           <GeoLocationProvider>
-            <ProductProvider>
-              <CartProvider>
+            <CartProvider>
+              <ProductProvider>
                 <Router />
-              </CartProvider>
-            </ProductProvider>
+              </ProductProvider>
+            </CartProvider>
           </GeoLocationProvider>
           <GlobalStyle />
         </AddressProvider>

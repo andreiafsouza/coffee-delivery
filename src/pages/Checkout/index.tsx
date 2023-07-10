@@ -3,20 +3,15 @@ import { useState, useEffect } from "react";
 import {
   MapPinLine,
   CurrencyDollar,
-  Money,
-  Bank,
   CreditCard,
   ArrowLeft,
 } from "phosphor-react";
 import { useTheme } from "styled-components";
 import { AddressForm } from "./components/AddressForm";
 import ProductCheckoutCard from "./components/ProductCheckoutCard";
-import { NavLink } from "react-router-dom";
 import { formatNumberToCurrency } from "../../utils";
 import useCart from "../../hooks/useCart";
 import { CustomButton } from "../../components/CustomButton";
-import LoadingSpinner from "~/components/LoadingSpinner";
-import SkeletonAddressForm from "~/components/Skeletons/SkeletonAddressForm";
 import useAddress from "~/hooks/useAddress";
 import { useNavigate } from "react-router-dom";
 import { Check } from "phosphor-react";
@@ -106,6 +101,7 @@ const Checkout = () => {
               <S.ButtonContainer>
                 {paymentTypes.map((item, index) => (
                   <CustomButton
+                    outlined
                     key={index}
                     icon={
                       <CreditCard size={16} color={theme.brand.yellowLight} />

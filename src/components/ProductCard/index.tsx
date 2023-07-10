@@ -40,6 +40,8 @@ const ProductCard = ({
     import.meta.url
   ).href;
 
+  console.log(cart);
+
   const onShowInCartMessage = () => {
     if (productQuantity !== item?.quantity) {
       setShowInCartMessage(true);

@@ -8,7 +8,7 @@ interface Props {
   title: string;
   color?: string;
   hover?: string;
-  outlined?: string;
+  outlined?: boolean;
   background?: string;
   disabled?: boolean;
   size?: "small" | "default";
