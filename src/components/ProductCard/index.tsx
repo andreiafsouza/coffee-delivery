@@ -7,7 +7,7 @@ import {
   ReducerAction,
   ReducerActionType,
 } from "../../context/CartProvider";
-import { ReactElement, useState, memo } from "react";
+import { ReactElement, useState } from "react";
 import { CheckMark } from "../CheckMark";
 import { InCartModalMessage } from "../InCartModalMessage";
 import { QuantitySelect } from "../QuantitySelect";
@@ -39,8 +39,6 @@ const ProductCard = ({
     `../../assets/${product.sku}.png`,
     import.meta.url
   ).href;
-
-  console.log(cart);
 
   const onShowInCartMessage = () => {
     if (productQuantity !== item?.quantity) {
@@ -132,20 +130,4 @@ const ProductCard = ({
   );
 };
 
-function areProductsEqual(
-  { product: prevItem }: PropsType,
-  { product: nextItem }: PropsType
-) {
-  return Object.keys(prevItem).every((key) => {
-    return (
-      prevItem[key as keyof ProductType] === nextItem[key as keyof ProductType]
-    );
-  });
-}
-
-const MemoizedProductCard = memo<typeof ProductCard>(
-  ProductCard,
-  areProductsEqual
-);
-
-export default MemoizedProductCard;
+export default ProductCard;
