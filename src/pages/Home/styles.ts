@@ -7,7 +7,8 @@ export const HomeContainer = styled.main`
 `;
 
 export const IntroContainer = styled.div`
-  min-height: 34rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   background: url(${background}) center center no-repeat;
   background-size: 100% 100%;
 
@@ -30,11 +31,7 @@ export const IntroContent = styled.div`
 `;
 
 export const IntroLeftContent = styled.div`
-  padding-bottom: 4rem;
-
-  @media (min-width: 55em) {
-    padding-bottom: 6.75rem;
-  }
+  padding-bottom: 2rem;
 `;
 
 export const IntroTextContainer = styled.div`
@@ -57,7 +54,7 @@ export const IntroSubtitle = styled.p`
   color: ${(props) => props.theme.base.subtitle};
   line-height: 130%;
 
-  padding-bottom: 4.125rem;
+  padding-bottom: 4rem;
 `;
 
 export const IntroItemContainer = styled.div`
