@@ -6,7 +6,7 @@
 
 This is a web app where you can order a variety of coffee types to be delivered right where you are (the delivery system only operates within Brazil). Simply choose your favorite coffees and add them to the shopping cart, specify the desired delivery address (you can select your current location with just one click), and choose the preferred payment method.
 
-<a href="" style="text-decoration: underline; color: white; font-size: 18px;">Here you can access the app</a>
+<a href="https://coffee-delivery-git-main-andreiafsouza.vercel.app/" style="text-decoration: underline; color: white; font-size: 18px;">Here you can access the app</a>
 
 ## 🛠️ What technologies and tools were used to build this project?
 
