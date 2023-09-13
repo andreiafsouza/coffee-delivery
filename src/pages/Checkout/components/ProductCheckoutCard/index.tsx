@@ -69,7 +69,7 @@ const ProductCheckoutCard = ({
               onSubtractQuantity={handleSubtractQuantity}
             />
             <CustomButton
-              icon={<Trash size={16} color={theme.brand.yellow} />}
+              icon={<Trash size={16} color={theme.base.error} />}
               title={"Remover"}
               size={"small"}
               onClick={handleRemoveFromCart}

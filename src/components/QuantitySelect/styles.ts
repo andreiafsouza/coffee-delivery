@@ -16,20 +16,18 @@ export const SelectContainer = styled.div`
 export const IconContainer = styled.button`
   transition: all 0.1s ease-in-out;
   border: none;
-  border-radius: 1000px;
+  height: 100%;
+  border-radius: 2px;
   background: none;
 
   svg {
-    color: ${(props) => props.theme.brand.yellow};
+    color: ${(props) => props.theme.brand.yellowLight};
   }
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
       transition: color 0.1s ease-in-out;
       background: ${(props) => props.theme.base.hover};
-      svg {
-        color: ${(props) => props.theme.brand.yellowDark};
-      }
     }
   }
 `;

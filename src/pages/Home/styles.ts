@@ -9,9 +9,8 @@ export const HomeContainer = styled.main`
 export const IntroContainer = styled.div`
   padding-top: 1rem;
   padding-bottom: 1rem;
-  background: url(${background}) center center no-repeat;
+  background-color: ${(props) => props.theme.base.background};
   background-size: 100% 100%;
-
   display: flex;
   align-items: center;
 `;
@@ -19,19 +18,23 @@ export const IntroContainer = styled.div`
 export const IntroContent = styled.div`
   max-width: 74rem;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 1rem 2rem 0 2rem;
 
   display: grid;
   grid-template-columns: 1fr;
 
   @media (min-width: 55em) {
     grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    padding: 2rem 2rem 0 2rem;
   }
 `;
 
 export const IntroLeftContent = styled.div`
-  padding-bottom: 2rem;
+  padding-bottom: 4rem;
+
+  @media (min-width: 55em) {
+    padding-bottom: 2rem;
+  }
 `;
 
 export const IntroTextContainer = styled.div`
@@ -54,7 +57,11 @@ export const IntroSubtitle = styled.p`
   color: ${(props) => props.theme.base.subtitle};
   line-height: 130%;
 
-  padding-bottom: 4rem;
+  padding-bottom: 2rem;
+
+  @media (min-width: 55em) {
+    padding-bottom: 4rem;
+  }
 `;
 
 export const IntroItemContainer = styled.div`

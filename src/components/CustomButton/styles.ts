@@ -45,10 +45,7 @@ export const Container = styled.button<ContainerProps>`
     props.outlined && !props.disabled
       ? `
       &:focus {
-        background: ${!props.disabled ? props.theme.base.button : "none"};
-        box-shadow: ${
-          !props.disabled ? `0 0 0 2px ${props.theme.brand.yellow}` : "none"
-        };
+        background: ${!props.disabled ? props.theme.brand.yellow : "none"};
       }
     `
       : ""}

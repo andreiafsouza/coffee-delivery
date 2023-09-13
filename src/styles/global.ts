@@ -54,6 +54,12 @@ export const GlobalStyle = createGlobalStyle`
     font-size: ${(props) => props.theme.fontSize[16]};
   }
 
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  } 
+
   img,
   picture,
   svg {

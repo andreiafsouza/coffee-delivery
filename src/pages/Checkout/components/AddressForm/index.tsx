@@ -172,7 +172,7 @@ export const AddressForm = ({
         <S.AddressFormContainer>
           <S.ButtonContainer>
             <CustomButton
-              icon={<MapPinLine size={16} color={theme.brand.yellow} />}
+              icon={<MapPinLine size={16} color={theme.brand.yellowLight} />}
               title={"Usar localização Atual"}
               onClick={() => {
                 getGeoLocation();

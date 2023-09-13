@@ -35,7 +35,7 @@ export const TextContainer = styled.div``;
 
 export const OrderTitle = styled.h1`
   font-family: ${(props) => props.theme.font.display};
-  color: ${(props) => props.theme.brand.yellowDark};
+  color: ${(props) => props.theme.base.subtitle};
   font-size: ${(props) => props.theme.fontSize[32]};
   font-weight: 800;
   line-height: 130%;
